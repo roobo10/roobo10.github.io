@@ -309,12 +309,12 @@
         $("#reportText").append("<div class=\"col-sm-12\">- Doughnut Status: "+$("#dsMarginDoughnut").find(":selected").text() +"</div>");
         $("#reportText").append("<div class=\"col-sm-12\">- Longitudinal Margin Status: "+$("#dsMarginLongitudinal").find(":selected").text() +"</div>");
         $("#reportText").append("<div class=\"col-sm-12\">- Circumferential Margin Status: "+$("#dsMarginCircumferential").find(":selected").text() +"</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Measurement to Non-Peritonealised Margin: " + $("#dsMarginCircumferential").val() + " mm</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Measurement to Non-Peritonealised Margin: " + $("#dsMarginCircumferentialDistance").val() + " mm</div>");
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         $("#reportText").append("<div class=\"col-sm-12\">- Total Number of Nodes: " + $("#dsNodesTotal").val() + "</div>");
         $("#reportText").append("<div class=\"col-sm-12\">- Total Number of Involved Nodes: " + $("#dsNodesInvolved").val() + "</div>");
         $("#reportText").append("<div class=\"col-sm-12\">- Highest Node: "+$("#dsNodesHighest").find(":selected").text() +"</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Number of Tumour Deposits: "+$("#dsNodesDeposits").find(":selected").text() +" (N/A if node positive)</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Number of Tumour Deposits: "+$("#dsNodesDeposits").find(":selected").text() +"</div>");
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         $("#reportText").append("<div class=\"col-sm-12\">- Histologically confirmed distant metastases: "+$("#dsMetastases").find(":selected").text() +"</div>");
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
@@ -331,7 +331,7 @@
         $("#reportText").append("<div class=\"col-sm-12 report-heading\">Summary</div>");
         $("#reportText").append("<div class=\"col-sm-12 report-heading\">" + $("#dsTumourDifferentiation").find(":selected").data("report-value") + " " + $("#dsTumourType").find(":selected").data("report-value") + "</div>");
         $("#reportText").append("<div class=\"col-sm-12\">Venous Invasion: "+$("#dsVenousInvasion").find(":selected").text() +"</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">" + $("dsNodesInvolved").val() + "/" + $("dsNodesTotal") + " lymph nodes involved</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">" + $("#dsNodesInvolved").val() + "/" + $("#dsNodesTotal").val() + " lymph nodes involved</div>");
         $("#reportText").append("<div class=\"col-sm-12\">TNM (8th Edition): " + staging + "</div>");
       }
 
