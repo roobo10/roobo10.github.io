@@ -11,14 +11,14 @@
 
     <title>Breast Cancer Proforma</title>
   </head>
-  <body onload="addTumour(); addMargin(); addCavityShaving(); addReceptors();">
+  <body onload="addTumour(); addMargin(); addMargin(); addMargin(); addMargin(); addCavityShaving(); addReceptors(); updateReport();">
     <div class="container">
       <h1>Breast Cancer Proforma</h1>
         <div id="toolbar" class="float-right">
           <button class="btn btn-primary" onclick="addTumour()"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Add Tumour</button>
         </div>
         <p class="lead">version 1.0 beta</p>
-    <div id="report-fields">
+    <div id="report-fields" class="my-2">
       <div id="tumours" class="my-2">
       </div>
       <h2>Background Breast</h2>
@@ -76,7 +76,7 @@
         <label for="r-macrometastases" class="col-sm-4 col-form-label">Nodes with macrometastases</label>
         <div class="col-sm-8">
           <div class="col-sm-12 row">
-            <input type="text" class="form-control col-sm-1" id="r-macrometastases">
+            <input type="text" class="form-control col-sm-1" id="r-macrometastases"><div class="col-sm-8 mx-2">Metastases &gt;2mm</div>
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@
         <label for="r-micrometastases" class="col-sm-4 col-form-label">Nodes with micrometastases</label>
         <div class="col-sm-8">
           <div class="col-sm-12 row">
-            <input type="text" class="form-control col-sm-1" id="r-micrometastases">
+            <input type="text" class="form-control col-sm-1" id="r-micrometastases"><div class="col-sm-8 mx-2">Metastases &gt;0.2mm and &le;2mm</div>
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@
         <label for="r-its" class="col-sm-4 col-form-label">Nodes with individual tumour cells</label>
         <div class="col-sm-8">
           <div class="col-sm-12 row">
-            <input type="text" class="form-control col-sm-1" id="r-itc">
+            <input type="text" class="form-control col-sm-1" id="r-itc"><div class="col-sm-8 mx-2">Metastases &le;0.2mm</div>
           </div>
         </div>
       </div>
@@ -112,9 +112,7 @@
 
       </div>
 
-      <button onclick="updateReport()" class="btn btn-info">Update Report</button>
-      <button onclick="copyToClipboard()" class="btn btn-primary">Copy To Clipboard</button>
-      
+      <button onclick="copyToClipboard()" class="btn btn-lg btn-primary float-right mt-4 mb-4"><i class="fas fa-file-word"></i>&nbsp;&nbsp;Copy To Clipboard</button>
     </div>
     <div id="tumour-template" class="d-none">
       <div class="tumour-close-button float-right">
@@ -197,8 +195,8 @@
         <label for="r-lvi" class="col-sm-4 col-form-label">Lymphovascular Invasion</label>
         <div class="col-sm-8">
           <select class="form-control" id="r-lvi">
-            <option value="true">Present</option>
             <option value="false">Absent</option>
+            <option value="true">Present</option>
           </select>
         </div>
       </div>
@@ -232,7 +230,7 @@
     </div>
 
     <div class="row my-1 d-none" id="margin-template">
-      <select class="col-sm-4 form-control" id="r-margin-location">
+      <select class="col-sm-3 form-control mr-1" id="r-margin-location">
         <option value="superior">Superior</option>
         <option value="lateral">Lateral</option>
         <option value="inferior">Inferior</option>
@@ -245,9 +243,12 @@
         <option value="inferomedial">Inferomedial</option>
         <option value="unassessable">Unassessable</option>
       </select>
-      <input type="text" class="form-control col-sm-1 ml-2 mr-1" id="r-margin-distances">
-      <div class="col-sm-2">mm</div>
-      <button class="btn btn-sm btn-outline-danger my-1 margin-remove-button" onclick="removeMargin(this)"><i class="fas fa-times"></i>&nbsp;&nbsp;Remove</button>
+      <select class="col-sm-2 form-control" onchange="changedMargin(this)" id="r-margin-involved">
+        <option value="uninvolved">Clear</option>
+        <option value="involved">Involved</option>
+      </select>
+      <input type="text" class="form-control col-sm-1 ml-3 mr-0" id="r-margin-distance">
+      <div class="col-sm-3 pl-1" id="r-margin-distance-label">mm from margin.</div> <button class="btn btn-sm btn-outline-danger my-1 ml-2 margin-remove-button" onclick="removeMargin(this)"><i class="fas fa-times"></i>&nbsp;&nbsp;Remove</button>
     </div>
 
     <div class="row my-1 d-none" id="shavings-template">
@@ -269,7 +270,7 @@
         <option value="involved">Involved</option>
       </select>
       <input type="text" class="form-control col-sm-1 ml-3 mr-0 d-none" id="r-cs-distance">
-      <div class="col-sm-3 pl-1 d-none" id="cs-distance-label">mm from margin.</div> <button class="btn btn-sm btn-outline-danger my-1 ml-2 cs-remove-button" onclick="removeShaving(this)"><i class="fas fa-times"></i>&nbsp;&nbsp;Remove</button>
+      <div class="col-sm-3 pl-1 d-none" id="r-cs-distance-label">mm from margin.</div> <button class="btn btn-sm btn-outline-danger my-1 ml-2 cs-remove-button" onclick="removeShaving(this)"><i class="fas fa-times"></i>&nbsp;&nbsp;Remove</button>
 
     </div>
 
@@ -295,15 +296,15 @@
         <div class="form-group row">
           <label for="r-her2" class="col-sm-2 col-form-label">Her-2</label>
           <select class="form-control col-sm-7" id="r-her2">
-            <option>Positive</option>
             <option>Negative</option>
+            <option>Positive</option>
             <option>Not Done</option>
           </select>
         </div>
       </div>
     </div>
 
-    <div id="reportText">
+    <div id="reportText" class="d-none">
     </div>
   </div>
 
@@ -316,23 +317,6 @@
         $('[data-toggle="tooltip"]').tooltip()
       })
 
-      $("input").change(function() {
-        updateReport();
-      });
-      $("select").change(function() {
-        updateReport();
-      });
-      function copyToClipboard() {
-        var str = document.getElementById('reportText').innerHTML;
-        function listener(e) {
-          e.clipboardData.setData("text/html", str);
-          e.clipboardData.setData("text/plain", str);
-          e.preventDefault();
-        }
-        document.addEventListener("copy", listener);
-        document.execCommand("copy");
-        document.removeEventListener("copy", listener);
-      };
 
       var tumourCount = 1;
       var tumourId = 0;
@@ -365,7 +349,14 @@
       }
 
       function addMargin() {
+
+        var marginsPresent = []
+        $("#margins").find("select[id^=r-margin-location]").find(":selected").each(function(i) {
+          marginsPresent.push($(this).val())
+        });
+
         var el = $("#margin-template").clone().removeClass("d-none").addClass("margin-section").attr('id','margin-'+marginId).appendTo("#margins");
+
         var els = el.find("input[id]").each (function(i) {
           $(this).attr('id',$(this).attr('id') + "-" + marginId);
         })
@@ -374,12 +365,24 @@
           $(this).attr('id',$(this).attr('id') + "-" + marginId);
         })
 
+        el.find("select[id^=r-margin-location]").find("option").each(function(i){
+          if (!marginsPresent.includes($(this).val())) {
+            $(this).prop("selected",true)
+            return false;
+          }
+        })
+
         updateMargins();
 
         marginId++;
       }
 
       function addCavityShaving() {
+        var shavingsPresent = []
+        $("#shavings").find("select[id^=r-cs-location]").find(":selected").each(function(i) {
+          shavingsPresent.push($(this).val())
+        });
+
         var el = $("#shavings-template").clone().removeClass("d-none").addClass("cs-section").attr('id','shaving-'+marginId).appendTo("#shavings");
         var els = el.find("input[id]").each (function(i) {
           $(this).attr('id',$(this).attr('id') + "-" + shavingId);
@@ -389,7 +392,15 @@
           $(this).attr('id',$(this).attr('id') + "-" + shavingId);
         })
 
-        //updateShavings();
+        el.find("select[id^=r-cs-location]").find("option").each(function(i){
+          if (!shavingsPresent.includes($(this).val())) {
+            $(this).prop("selected",true)
+            return false;
+          }
+        })
+
+
+        updateCavityShavings();
 
         shavingId++;
       }
@@ -414,11 +425,22 @@
       function changedShaving(el) {
         if ($(el).val() == "involved") {
           $(el).siblings("input[id^=r-cs-distance]").removeClass("d-none")
-          $(el).siblings("div[id^=cs-distance-label]").removeClass("d-none")
+          $(el).siblings("div[id^=r-cs-distance-label]").removeClass("d-none")
         }
         else {
           $(el).siblings("input[id^=r-cs-distance]").addClass("d-none")
-          $(el).siblings("div[id^=cs-distance-label]").addClass("d-none")
+          $(el).siblings("div[id^=r-cs-distance-label]").addClass("d-none")
+        }
+      }
+
+      function changedMargin(el) {
+        if ($(el).val() == "uninvolved") {
+          $(el).siblings("input[id^=r-margin-distance]").removeClass("d-none")
+          $(el).siblings("div[id^=r-margin-distance-label]").removeClass("d-none")
+        }
+        else {
+          $(el).siblings("input[id^=r-margin-distance]").addClass("d-none")
+          $(el).siblings("div[id^=r-margin-distance-label]").addClass("d-none")
         }
       }
 
@@ -437,6 +459,7 @@
 
       function removeShaving(el) {
           el.closest("div.cs-section").remove();
+          updateCavityShavings();
       }
 
       function removeReceptors(el) {
@@ -445,16 +468,29 @@
 
       function updateMargins() {
         if ($("div.margin-section").length > 1) {
-          $("#nearest-margin-label").text("Nearest Radial Margins")
+          $("#nearest-margin-label").text("Nearest Margins")
           $("button.margin-remove-button").each(function(i) {
             $(this).removeClass("d-none");
           })
         }
         else {
-          $("#nearest-margin-label").text("Nearest Radial Margin")
+          $("#nearest-margin-label").text("Nearest Margin")
           $("button.margin-remove-button").each(function(i) {
             $(this).addClass("d-none");
           })
+        }
+      }
+
+      function updateCavityShavings() {
+        if ($("div.cs-section").length > 1) {
+          $("#cavity-shavings-label").text("Cavity Shavings")
+          $("#cavity-shavings-label").removeClass("d-none")
+        }
+        else if  ($("div.cs-section").length == 1){
+          $("#cavity-shavings-label").text("Cavity Shaving")
+          $("#cavity-shavings-label").removeClass("d-none")
+        } else {
+          $("#cavity-shavings-label").addClass("d-none")
         }
       }
 
@@ -477,15 +513,41 @@
         }
       }
 
+      function copyToClipboard() {
+        var str = document.getElementById('reportText').innerHTML;
+
+        function listener(e) {
+          e.clipboardData.setData("text/html", str);
+          e.clipboardData.setData("text/plain", str);
+          e.preventDefault();
+        }
+        document.addEventListener("copy", listener);
+        document.execCommand("copy");
+        document.removeEventListener("copy", listener);
+      };
+
       function updateReport() {
+        //attach events
+        $("input").off().on("change", function() {
+          updateReport();
+        });
+        $("select").off().on("change",function() {
+          updateReport();
+        });
+
+        //checks
+
+
         $("#reportText").empty();
+        $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline; text-transform:uppercase;\">Breast Cancer Profroma</div>");
         $("#report-fields div.tumour-section").each(function(i) {
           if (($("div.tumour-section").length > 1) || ($(this).find("[id^=r-tumour-desc]").val().length > 0)) {
             heading = $(this).find("[id^=r-tumour-desc]").val()
             if (heading.length == 0) {
               heading =  $(this).find("h2").text()
             }
-            $("#reportText").append("<div style=\"font-weight: bold; text-decoration:underline\">"+heading+"</div>")
+            $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+            $("#reportText").append("<div style=\"font-weight: bold;\">"+heading+"</div>")
           }
           tumourTypes = $(this).find("input[type=checkbox]:checked")
           var tumourTypesText = ""
@@ -518,9 +580,9 @@
 
           $("#reportText").append("<div class=\"col-sm-12\">- Tumour type: "+ tumourTypesText +"</div>");
           $("#reportText").append("<div class=\"col-sm-12\">- Tumour grade: "+ tumourGrade +" (T"+tumourGradeT+", P" + tumourGradeP + ", M" + tumourGradeM +")</div>");
-          $("#reportText").append("<div class=\"col-sm-12\">- Invasive tumour size: "+ $(this).find("input[id^=r-its]").val() +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Invasive tumour size: "+ $(this).find("input[id^=r-its]").val() +"mm </div>");
           $("#reportText").append("<div class=\"col-sm-12\">- Ductal carcinoma in-situ: "+ $(this).find("select[id^=r-dcis]").find(":selected").text() +"</div>");
-          $("#reportText").append("<div class=\"col-sm-12\">- Whole tumour size: "+ $(this).find("input[id^=r-wts]").val() +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Whole tumour size: "+ $(this).find("input[id^=r-wts]").val() +"mm </div>");
           $("#reportText").append("<div class=\"col-sm-12\">- Lymphovascular space invasion: "+ $(this).find("select[id^=r-lvi]").find(":selected").text() +"</div>");
         })
         if ($("r-background-breast").text().length) {
@@ -533,17 +595,25 @@
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline;\">Margins</div>");
 
         $(".margin-section").each(function(i) {
-            $("#reportText").append("<div class=\"col-sm-12\"> - "+$(this).find("select[id^=r-margin-location]").find(":selected").text()+" margin: " + parseInt($(this).find("input[id^=r-margin-distance]").val()) + "</div>")
-        })
-
-        $(".cs-section").each(function(i) {
           var distance ="";
-          if ($(this).find("select[id^=r-cs-involved]").val() == "involved") {
-            distance = " - " + parseInt($(this).find("input[id^=r-cs]").val()) + "mm from margin."
+          if ($(this).find("select[id^=r-margin-involved]").val() != "involved") {
+            distance = " - " + parseInt($(this).find("input[id^=r-margin-distance]").val()) + "mm from margin."
           }
-          $("#reportText").append("<div class=\"col-sm-12\"> - "+$(this).find("select[id^=r-cs-location]").find(":selected").text()+" margin: " + $(this).find("select[id^=r-cs-involved]").find(":selected").text() + distance + "</div>")
+          $("#reportText").append("<div class=\"col-sm-12\"> - "+$(this).find("select[id^=r-margin-location]").find(":selected").text()+" margin: " + $(this).find("select[id^=r-margin-involved]").find(":selected").text() + distance +  "</div>")
         })
 
+        if ($(".cs-section").length > 0) {
+          $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+          $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline;\">Cavity Shavings</div>");
+
+          $(".cs-section").each(function(i) {
+            var distance ="";
+            if ($(this).find("select[id^=r-cs-involved]").val() == "involved") {
+              distance = " - " + parseInt($(this).find("input[id^=r-cs-distance]").val()) + "mm from margin."
+            }
+            $("#reportText").append("<div class=\"col-sm-12\"> - "+$(this).find("select[id^=r-cs-location]").find(":selected").text()+" cavity shaving: " + $(this).find("select[id^=r-cs-involved]").find(":selected").text() + distance + "</div>")
+          })
+        }
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline;\">Lymph Nodes - "+$("#r-node-biopsy-type").find(":selected").text()+"</div>");
         $("#reportText").append("<div class=\"col-sm-12\"> - Total lymph nodes: " + parseInt($("#r-total-nodes").val()) + "</div>")
@@ -600,7 +670,8 @@
           if (!summaryLVI) {
             summaryLVI = $(this).find("input[id^=r-lvi]").val()
           }
-          $("#reportText").append("<div class=\"col-sm-12\">- " + tumourDesc + tumourTypesText +", Grade "+tumourGrade+" (ITS: " + parseInt($(this).find("input[id^=r-its]").val()) + "mm)</div>");
+          var its = parseInt($(this).find("input[id^=r-its]").val())
+          $("#reportText").append("<div class=\"col-sm-12\">- " + tumourDesc + tumourTypesText +", Grade "+tumourGrade+" (ITS: " + its + "mm, TNM8 "+getTStage(its)+")</div>");
         })
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         if (summaryLVI){
@@ -619,9 +690,31 @@
           var prp = parseInt($(this).find("input[id^=r-pr-p]").val())
           var pri = parseInt($(this).find("input[id^=r-pr-i]").val())
           $("#reportText").append("<div class=\"col-sm-12\"> - " + receptorsDesc + "ER " + (erp+eri) + " (P"+erp+" I"+eri+"), PR " + (prp+pri) + " (P"+prp+" I"+pri+"), Her2 "+$(this).find("select[id^=r-her2]").find(":selected").text()+ " (Please see " +$(this).find("input[id^=r-receptors-labno]").val()+ ")")
+          $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+          $("#reportText").append("<div class=\"col-sm-12\" style=\"font-style:italic; font-size:smaller;\">Breast Carcinoma Proforma v1.0beta (insert date approved)</div>");
         })
       }
 
+      function getTStage(tumourSize) {
+        var tStage ="pT1mi";
+        if (tumourSize > 1) {
+          tStage = "pT1a"
+        }
+        if (tumourSize > 5) {
+          tStage = "pT1b"
+        }
+        if (tumourSize > 10) {
+          tStage = "pT1c"
+        }
+        if (tumourSize > 20) {
+          tStage = "pT2"
+        }
+        if (tumourSize > 50) {
+          tStage = "pT3"
+        }
+        return tStage;
+      }
     </script>
   </body>
 </html>
