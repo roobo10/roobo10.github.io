@@ -112,7 +112,9 @@
 
       </div>
 
-      <button onclick="updateReport()">Update Report</button>
+      <button onclick="updateReport()" class="btn btn-info">Update Report</button>
+      <button onclick="copyToClipboard()" class="btn btn-primary">Copy To Clipboard</button>
+      
     </div>
     <div id="tumour-template" class="d-none">
       <div class="tumour-close-button float-right">
@@ -320,6 +322,17 @@
       $("select").change(function() {
         updateReport();
       });
+      function copyToClipboard() {
+        var str = document.getElementById('reportText').innerHTML;
+        function listener(e) {
+          e.clipboardData.setData("text/html", str);
+          e.clipboardData.setData("text/plain", str);
+          e.preventDefault();
+        }
+        document.addEventListener("copy", listener);
+        document.execCommand("copy");
+        document.removeEventListener("copy", listener);
+      };
 
       var tumourCount = 1;
       var tumourId = 0;
