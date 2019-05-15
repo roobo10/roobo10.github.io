@@ -304,7 +304,7 @@
       </div>
     </div>
 
-    <div id="reportText" class="d-none">
+    <div id="reportText" class="">
     </div>
   </div>
 
@@ -339,6 +339,7 @@
         })
         tumourCount++;
         tumourId++;
+        attachEvents();
         updateTumourCount();
       }
 
@@ -371,6 +372,7 @@
             return false;
           }
         })
+        attachEvents();
 
         updateMargins();
 
@@ -399,6 +401,7 @@
           }
         })
 
+        attachEvents();
 
         updateCavityShavings();
 
@@ -416,6 +419,8 @@
         var els = el.find("select[id]").each (function(i) {
           $(this).attr('id',$(this).attr('id') + "-" + receptorId);
         })
+
+        attachEvents();
 
         //updateShavings();
 
@@ -526,14 +531,17 @@
         document.removeEventListener("copy", listener);
       };
 
-      function updateReport() {
-        //attach events
+      function attachEvents() {
         $("input").off().on("change", function() {
           updateReport();
         });
         $("select").off().on("change",function() {
           updateReport();
         });
+      }
+      function updateReport() {
+        //attach events
+        attachEvents();
 
         //checks
 
@@ -630,6 +638,7 @@
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline;\">Summary</div>");
         var summaryLVI = false;
+        var largestTumour = 0;
         $("#report-fields div.tumour-section").each(function(i) {
           tumourTypes = $(this).find("input[type=checkbox]:checked")
           var tumourTypesText = ""
@@ -671,6 +680,9 @@
             summaryLVI = $(this).find("input[id^=r-lvi]").val()
           }
           var its = parseInt($(this).find("input[id^=r-its]").val())
+          if (its > largestTumour) {
+            largestTumour = its;
+          }
           $("#reportText").append("<div class=\"col-sm-12\">- " + tumourDesc + tumourTypesText +", Grade "+tumourGrade+" (ITS: " + its + "mm, TNM8 "+getTStage(its)+")</div>");
         })
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
@@ -679,6 +691,8 @@
         } else {
           $("#reportText").append("<div class=\"col-sm-12\">- Lymphovascular invasion not identified</div>")
         }
+        $("#reportText").append("<div class=\"col-sm-12\">- TNM8 "+ getTStage(largestTumour) +" "+ getNStage()+"</div>")
+
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         $(".receptors-section").each(function(i) {
           var receptorsDesc = ""
@@ -714,6 +728,43 @@
           tStage = "pT3"
         }
         return tStage;
+      }
+
+      function getNStage() {
+        var totalNodes = parseInt($("#r-total-nodes").val())
+        var macroMets = parseInt($("#r-macrometastases").val())
+        var microMets = parseInt($("#r-micrometastases").val())
+        var itcMets = parseInt($("#r-itc").val())
+
+
+        if (isNaN(totalNodes)) {
+          return false
+        }
+        if (totalNodes == 0) {
+          return "pNx"
+        }
+        if (macroMets > 0 && macroMets + microMets >=4 && macroMets + microMets <=9) {
+          return "pN2a";
+        }
+
+        if (macroMets > 0 && macroMets + microMets >=1 && macroMets + microMets <=3) {
+          return "pN1a";
+        }
+
+        if (macroMets == 0 && microMets > 0) {
+          return "pN1mi"
+        }
+
+        if (macroMets == 0 && microMets == 0 && itcMets > 0) {
+          return "pN0i+"
+        }
+
+        if (macroMets == 0 && microMets == 0 && itcMets == 0) {
+          return "pN0"
+        }
+
+        return "pN(ERROR)"
+
       }
     </script>
   </body>
