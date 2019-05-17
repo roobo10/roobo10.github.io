@@ -34,8 +34,8 @@
       <button class="btn btn-sm btn-primary mx-2 float-right" onclick="addCavityShaving()"><i class="fas fa-plus-square"></i>&nbsp;&nbsp;Add Cavity Shaving</button>
       <h2>Margins</h2>
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label" id="nearest-margin-label">Nearest Margin</label>
-        <div class="col-sm-8">
+        <label class="col-sm-3 col-form-label" id="nearest-margin-label">Nearest Margin</label>
+        <div class="col-sm-9">
           <div class="form-group row">
             <div class="col-sm-12" id="margins">
 
@@ -44,8 +44,8 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-sm-4 col-form-label" id="cavity-shavings-label">Cavity Shavings</label>
-        <div class="col-sm-8">
+        <label class="col-sm-3 col-form-label" id="cavity-shavings-label">Cavity Shavings</label>
+        <div class="col-sm-9">
           <div class="form-group row">
             <div class="col-sm-12" id="shavings">
 
@@ -61,38 +61,41 @@
           <select class="form-control" id="r-node-biopsy-type">
             <option value="snb">Sentinel Node Biopsy</option>
             <option value="clearance">Axillary Clearance</option>
+            <option value="none">None</option>
           </select>
         </div>
       </div>
-      <div class="form-group row">
-        <label for="r-total-nodes" class="col-sm-4 col-form-label">Total Lymph Nodes</label>
-        <div class="col-sm-8">
-          <div class="col-sm-12 row">
-            <input type="text" class="form-control col-sm-1" id="r-total-nodes">
+      <div id="lymph-nodes-section">
+        <div class="form-group row">
+          <label for="r-total-nodes" class="col-sm-4 col-form-label">Total Lymph Nodes</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 row">
+              <input type="text" class="form-control col-sm-1" id="r-total-nodes">
+            </div>
           </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="r-macrometastases" class="col-sm-4 col-form-label">Nodes with macrometastases</label>
-        <div class="col-sm-8">
-          <div class="col-sm-12 row">
-            <input type="text" class="form-control col-sm-1" id="r-macrometastases"><div class="col-sm-8 mx-2">Metastases &gt;2mm</div>
+        <div class="form-group row">
+          <label for="r-macrometastases" class="col-sm-4 col-form-label">Nodes with macrometastases</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 row">
+              <input type="text" class="form-control col-sm-1" id="r-macrometastases"><div class="col-sm-8 mx-2">Metastases &gt;2mm</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="r-micrometastases" class="col-sm-4 col-form-label">Nodes with micrometastases</label>
-        <div class="col-sm-8">
-          <div class="col-sm-12 row">
-            <input type="text" class="form-control col-sm-1" id="r-micrometastases"><div class="col-sm-8 mx-2">Metastases &gt;0.2mm and &le;2mm</div>
+        <div class="form-group row">
+          <label for="r-micrometastases" class="col-sm-4 col-form-label">Nodes with micrometastases</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 row">
+              <input type="text" class="form-control col-sm-1" id="r-micrometastases"><div class="col-sm-8 mx-2">Metastases &gt;0.2mm and &le;2mm</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="r-its" class="col-sm-4 col-form-label">Nodes with individual tumour cells</label>
-        <div class="col-sm-8">
-          <div class="col-sm-12 row">
-            <input type="text" class="form-control col-sm-1" id="r-itc"><div class="col-sm-8 mx-2">Metastases &le;0.2mm</div>
+        <div class="form-group row">
+          <label for="r-its" class="col-sm-4 col-form-label">Nodes with individual tumour cells</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 row">
+              <input type="text" class="form-control col-sm-1" id="r-itc"><div class="col-sm-8 mx-2">Metastases &le;0.2mm</div>
+            </div>
           </div>
         </div>
       </div>
@@ -165,7 +168,7 @@
         <div class="col-sm-8">
           <div class="row">
             <div class="col-sm-12 form-inline my-1">
-              <label class="col-form-label col-4" data-report-text="T" for="r-tg-tubules">Tubules</label>
+              <label class="col-form-label col-4 justify-content-end" data-report-text="T" for="r-tg-tubules">Tubules</label>
               <select class="form-control col-8" id="tg-tubules">
                 <option value="1">1 (&gt;75%)</option>
                 <option value="2">2 (10-75%)</option>
@@ -173,7 +176,7 @@
               </select>
             </div>
             <div class="col-sm-12 form-inline my-1">
-              <label class="col-form-label col-4 " data-report-text="P" for="r-tg-pleomorphism">Nuclear Pleomorphism</label>
+              <label class="col-form-label col-4 justify-content-end" data-report-text="P" for="r-tg-pleomorphism">Nuclear Pleomorphism</label>
               <select class="form-control col-8" id="tg-pleomorphism">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -181,7 +184,7 @@
               </select>
             </div>
             <div class="col-sm-12 form-inline my-1">
-              <label class="col-form-label col-4" data-report-text="M" for="r-tg-mitoses">Mitoses</label>
+              <label class="col-form-label col-4 justify-content-end" data-report-text="M" for="r-tg-mitoses">Mitoses</label>
               <select class="form-control col-8" id="tg-mitoses">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -247,7 +250,7 @@
         <option value="uninvolved">Clear</option>
         <option value="involved">Involved</option>
       </select>
-      <input type="text" class="form-control col-sm-1 ml-3 mr-0" id="r-margin-distance">
+      <input type="text" class="form-control col-sm-1 ml-1 mr-0" id="r-margin-distance">
       <div class="col-sm-3 pl-1" id="r-margin-distance-label">mm from margin.</div> <button class="btn btn-sm btn-outline-danger my-1 ml-2 margin-remove-button" onclick="removeMargin(this)"><i class="fas fa-times"></i>&nbsp;&nbsp;Remove</button>
     </div>
 
@@ -265,12 +268,15 @@
         <option value="inferomedial">Inferomedial</option>
         <option value="unassessable">Unassessable</option>
       </select>
-      <select class="col-sm-2 form-control" onchange="changedShaving(this)" id="r-cs-involved">
+      <select class="col-sm-4 form-control" onchange="changedShaving(this)" id="r-cs-involved">
         <option value="uninvolved">Clear</option>
+        <option value="involved">Involved (Carcinoma)</option>
+        <option value="involved">Involved (DCIS)</option>
+        <option value="involved">Involved (Carcinoma &amp; DCIS)</option>
         <option value="involved">Involved</option>
       </select>
-      <input type="text" class="form-control col-sm-1 ml-3 mr-0 d-none" id="r-cs-distance">
-      <div class="col-sm-3 pl-1 d-none" id="r-cs-distance-label">mm from margin.</div> <button class="btn btn-sm btn-outline-danger my-1 ml-2 cs-remove-button" onclick="removeShaving(this)"><i class="fas fa-times"></i>&nbsp;&nbsp;Remove</button>
+      <input type="text" class="form-control col-sm-1 ml-1 mr-0 d-none" id="r-cs-distance">
+      <div class="col-sm-3 p-0 ml-1 d-none" id="r-cs-distance-label">mm from margin. <button class="btn btn-sm btn-outline-danger my-1 ml-2 cs-remove-button" onclick="removeShaving(this)"><i class="fas fa-times"></i></button></div>
 
     </div>
 
@@ -304,7 +310,7 @@
       </div>
     </div>
 
-    <div id="reportText" class="d-none">
+    <div id="reportText" class="">
     </div>
   </div>
 
@@ -313,6 +319,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
+
+      var debug = false;
+      if (debug) {
+        $("#reportText").removeClass("d-none");
+      }
+      else {
+        $("#reportText").addClass("d-none");
+      }
       $(function () {
         $('[data-toggle="tooltip"]').tooltip()
       })
@@ -538,16 +552,66 @@
         $("select").off().on("change",function() {
           updateReport();
         });
+
+        errorChecks();
+      }
+
+      function errorChecks() {
+        //checks
+        $(".tumour-section").each(function(i) {
+          if (isNaN(parseInt($(this).find("input[id^=r-its]").val()))) {
+            $(this).find("input[id^=r-its]").addClass("bg-danger text-light")
+          }
+          else {
+            $(this).find("input[id^=r-its]").removeClass("bg-danger text-light")
+          }
+        })
+
+        sectionsToCheck = [[".tumour-section","r-wts"],[".tumour-section","r-its"],[".receptors-section","r-er-p"],[".receptors-section","r-er-i"],[".receptors-section","r-pr-p"],[".receptors-section","r-pr-i"],[".margin-section","r-margin-distance"],[".cs-section","r-cs-distance"],["body","r-total-nodes"],["body","r-macrometastases"],["body","r-micrometastases"],["body","r-itc"]]
+        sectionsToCheck.forEach(function(section){
+          $(section[0]).each(function(i) {
+            if (isNaN(parseInt($(this).find("input[id^="+section[1]+"]").val()))) {
+              $(this).find("input[id^="+section[1]+"]").addClass("bg-danger text-light")
+            }
+            else {
+              $(this).find("input[id^="+section[1]+"]").removeClass("bg-danger text-light")
+            }
+          })
+        })
+        sectionsToCheck = [[".receptors-section","r-receptors-labno"]]
+        sectionsToCheck.forEach(function(section){
+          $(section[0]).each(function(i) {
+            if (isNaN(parseInt($(this).find("input[id^="+section[1]+"]").val()))) {
+              $(this).find("input[id^="+section[1]+"]").addClass("bg-danger text-light")
+            }
+            else {
+              $(this).find("input[id^="+section[1]+"]").removeClass("bg-danger text-light")
+            }
+          })
+        })
+
+        sectionsToCheck = [[".tumour-section","r-tumour-description"],[".receptors-section","r-receptors-desc"]]
+        sectionsToCheck.forEach(function(section){
+          if ($(section[0]).length > 1){
+            $(section[0]).each(function(i) {
+              if (isNaN(parseInt($(this).find("input[id^="+section[1]+"]").val()))) {
+                $(this).find("input[id^="+section[1]+"]").addClass("bg-warning text-dark")
+              }
+              else {
+                $(this).find("input[id^="+section[1]+"]").removeClass("bg-warning text-dark")
+              }
+            })
+          }
+        })
       }
       function updateReport() {
         //attach events
         attachEvents();
 
-        //checks
-
+        errorChecks();
 
         $("#reportText").empty();
-        $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline; text-transform:uppercase;\">Breast Cancer Proforma</div>");
+        $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline; text-transform:uppercase;\">Breast Cancer Profroma</div>");
         $("#report-fields div.tumour-section").each(function(i) {
           if (($("div.tumour-section").length > 1) || ($(this).find("[id^=r-tumour-desc]").val().length > 0)) {
             heading = $(this).find("[id^=r-tumour-desc]").val()
@@ -624,11 +688,12 @@
         }
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline;\">Lymph Nodes - "+$("#r-node-biopsy-type").find(":selected").text()+"</div>");
-        $("#reportText").append("<div class=\"col-sm-12\"> - Total lymph nodes: " + parseInt($("#r-total-nodes").val()) + "</div>")
-        $("#reportText").append("<div class=\"col-sm-12\"> - Nodes with macrometastases: " + parseInt($("#r-macrometastases").val()) + "</div>")
-        $("#reportText").append("<div class=\"col-sm-12\"> - Nodes with micrometastases: " + parseInt($("#r-micrometastases").val()) + "</div>")
-        $("#reportText").append("<div class=\"col-sm-12\"> - Nodes with isolated tumour cells: " + parseInt($("#r-itc").val()) + "</div>")
-
+        if ($("#r-node-biopsy-type").val() != "none") {
+          $("#reportText").append("<div class=\"col-sm-12\"> - Total lymph nodes: " + parseInt($("#r-total-nodes").val()) + "</div>")
+          $("#reportText").append("<div class=\"col-sm-12\"> - Nodes with macrometastases: " + parseInt($("#r-macrometastases").val()) + "</div>")
+          $("#reportText").append("<div class=\"col-sm-12\"> - Nodes with micrometastases: " + parseInt($("#r-micrometastases").val()) + "</div>")
+          $("#reportText").append("<div class=\"col-sm-12\"> - Nodes with isolated tumour cells: " + parseInt($("#r-itc").val()) + "</div>")
+        }
         if ($("r-comments").text().length) {
           $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
           $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline;\">Comments</div>");
@@ -677,7 +742,7 @@
           }
 
           if (!summaryLVI) {
-            summaryLVI = $(this).find("input[id^=r-lvi]").val()
+            summaryLVI = $(this).find("select[id^=r-lvi]").val()
           }
           var its = parseInt($(this).find("input[id^=r-its]").val())
           if (its > largestTumour) {
@@ -738,7 +803,7 @@
 
 
         if (isNaN(totalNodes)) {
-          return false
+          return "pNx"
         }
         if (totalNodes == 0) {
           return "pNx"
