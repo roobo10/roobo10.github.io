@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<templates baseurl="http://roobo10.github.io/proformas/">
+  <template url="proforma.breast-1.0.html">Breast Carcinoma (beta)</template>
+  <template url="proforma.colorectal-1.0.html">Colorectal Carcinoma (beta)</template>
+  <template url="proforma.melanoma-1.0.html">Melanoma (beta)</template>
+</templates>
