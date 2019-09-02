@@ -76,8 +76,8 @@
           <label for="dsUlceration" class="col-sm-4 col-form-label">Ulceration</label>
           <div class="col-sm-8">
             <select class="form-control" id="dsUlceration">
-              <option value="no" data-report-value="Not Identified">Not identified</option>
-              <option value="yes" data-report-value="Present" selected>Present</option>
+              <option value="no" data-report-value="Not Identified" selected>Not identified</option>
+              <option value="yes" data-report-value="Present">Present</option>
               <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
               <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
             </select>
@@ -87,8 +87,8 @@
           <label for="dsLvi" class="col-sm-4 col-form-label">Lymphocasvular Invasion</label>
           <div class="col-sm-8">
             <select class="form-control" id="dsLvi">
-              <option value="no" data-report-value="Not Identified">Not identified</option>
-              <option value="yes" data-report-value="Present" selected>Present</option>
+              <option value="no" data-report-value="Not Identified" selected>Not identified</option>
+              <option value="yes" data-report-value="Present">Present</option>
               <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
               <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
             </select>
@@ -98,8 +98,8 @@
           <label for="dsMicrosatellites" class="col-sm-4 col-form-label">Microsatellite/in-transit metastasis</label>
           <div class="col-sm-8">
             <select class="form-control" id="dsMicrosatellites">
-              <option value="no" data-report-value="Not Identified">Not identified</option>
-              <option value="yes" data-report-value="Present" selected>Present</option>
+              <option value="no" data-report-value="Not Identified"selected>Not identified</option>
+              <option value="yes" data-report-value="Present">Present</option>
               <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
               <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
             </select>
@@ -109,8 +109,8 @@
           <label for="dsPni" class="col-sm-4 col-form-label">Neurotropic/perineural invasion</label>
           <div class="col-sm-8">
             <select class="form-control" id="dsPni">
-              <option value="no" data-report-value="Not Identified">Not identified</option>
-              <option value="yes" data-report-value="Present" selected>Present</option>
+              <option value="no" data-report-value="Not Identified selected">Not identified</option>
+              <option value="yes" data-report-value="Present">Present</option>
               <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
               <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
             </select>
@@ -267,6 +267,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
+      var debug = false;
+      if (debug)
+      {
+        $("#reportText").removeClass("d-none");
+      }
 
       function isNonZeroInt(str) {
         n = parseInt(str)
@@ -409,22 +414,29 @@
         //Now Create Report Text
         $("#reportText").empty();
         $("#reportText").append("<div class=\"col-md-12\" style=\"font-weight:bold; text-decoration: underline; text-transform:uppercase;\">Melanoma Proforma</div>");
-        var tumourType = !$("#dsTumourType").find(":selected").val().endsWith("other") ? $("#dsTumourType").find(":selected").text() :$("#dsTumourTypeText").val();
+        var tumourType = !$("#dsTumourType").find(":selected").val().endsWith("other") ? $("#dsTumourType").find(":selected").data("report-value") :$("#dsTumourTypeText").val();
         $("#reportText").append("<div class=\"col-sm-12\">- Tumour type: "+ tumourType +"</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Breslow Thickness: "+$("#dsBreslowThickness").val() +"mm</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Mitotic Rate: "+$("#dsMitoses").val() +" per mm<sup>2</sup></div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Lymphovascular space invasion: "+$("#dsLvi").find(":selected").data("report-value") +"</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Perineural invasion: "+$("#dsPni").find(":selected").data("report-value") +"</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Microsatellite/In-transit Metastases: "+$("#dsMicrosatellites").find(":selected").data("report-value") +"</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Tumour-infiltrating lymphocytes: "+$("#dsTil").find(":selected").data("report-value") +"</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Growth phase: "+$("#dsGrowthPhase").find(":selected").data("report-value") +"</div>");
+        if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
+          $("#reportText").append("<div class=\"col-sm-12\">- Breslow Thickness: "+$("#dsBreslowThickness").val() +"mm</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Mitotic Rate: "+$("#dsMitoses").val() +" per mm<sup>2</sup></div>");
+        }
+        $("#reportText").append("<div class=\"col-sm-12\">- Ulceration: "+$("#dsUlceration").find(":selected").data("report-value") +"</div>");
+        if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
+          $("#reportText").append("<div class=\"col-sm-12\">- Lymphovascular space invasion: "+$("#dsLvi").find(":selected").data("report-value") +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Perineural invasion: "+$("#dsPni").find(":selected").data("report-value") +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Microsatellite/In-transit Metastases: "+$("#dsMicrosatellites").find(":selected").data("report-value") +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Tumour-infiltrating lymphocytes: "+$("#dsTil").find(":selected").data("report-value") +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Growth phase: "+$("#dsGrowthPhase").find(":selected").data("report-value") +"</div>");
+        }
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Margins</div>");
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: none;\">In-situ Component</div>");
         $("#reportText").append("<div class=\"col-sm-12\">- Peripheral margin: "+ ($("#dsInsituPrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInsituPrmDistance").val()))? $("#dsInsituPrm").find(":selected").text() :"") + ($("#dsInsituPrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInsituPrmDistance").val())) ? " " + $("#dsInsituPrmDistance").val() + " mm from the margin." : "")+"</div>");
-        $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: none;\">Invasive Component</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Peripheral margin: "+ ($("#dsInvasivePrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInvasivePrmDistance").val()))? $("#dsInvasivePrm").find(":selected").text():"") + ($("#dsInvasivePrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInvasivePrmDistance").val())) ? " " + $("#dsInvasivePrmDistance").val() + " mm from the margin." : "")+"</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Deep margin: "+($("#dsInvasiveDrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInvasiveDrmDistance").val()))? $("#dsInvasiveDrm").find(":selected").text():"") + ($("#dsInvasiveDrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInvasiveDrmDistance").val())) ? " " + $("#dsInvasiveDrmDistance").val() + " mm from the margin." : "")+"</div>");
+        if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
+          $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: none;\">Invasive Component</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Peripheral margin: "+ ($("#dsInvasivePrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInvasivePrmDistance").val()))? $("#dsInvasivePrm").find(":selected").text():"") + ($("#dsInvasivePrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInvasivePrmDistance").val())) ? " " + $("#dsInvasivePrmDistance").val() + " mm from the margin." : "")+"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Deep margin: "+($("#dsInvasiveDrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInvasiveDrmDistance").val()))? $("#dsInvasiveDrm").find(":selected").text():"") + ($("#dsInvasiveDrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInvasiveDrmDistance").val())) ? " " + $("#dsInvasiveDrmDistance").val() + " mm from the margin." : "")+"</div>");
+        }
 
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         if ($.trim($("#dsBackgroudLesions").val())) {
@@ -447,17 +459,19 @@
         }
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Summary</div>");
         $("#reportText").append("<div class=\"col-sm-12\">" +  tumourType + " (UICC TNM8 "+staging+")</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">Breslow Thickness: "+$("#dsBreslowThickness").val() +"mm</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">Lymphovascular Space Invasion: "+$("#dsLvi").find(":selected").data("report-value") +"</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">Perineural Invasion: "+$("#dsPni").find(":selected").data("report-value") +"</div>");
-        if ($("#dsInvasivePrm").val() == "involved") {
-          $("#reportText").append("<div class=\"col-sm-12\">Peripheral margin involved</div>");
-        }
-        if ($("#dsInvasiveDrm").val() == "involved") {
-          $("#reportText").append("<div class=\"col-sm-12\">Deep margin involved</div>");
-        }
-        if ($("#dsInsituPrm").val() == "involved") {
-          $("#reportText").append("<div class=\"col-sm-12\">Peripheral margin involved by in-situ component</div>");
+        if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
+          $("#reportText").append("<div class=\"col-sm-12\">Breslow Thickness: "+$("#dsBreslowThickness").val() +"mm</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">Lymphovascular Space Invasion: "+$("#dsLvi").find(":selected").data("report-value") +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">Perineural Invasion: "+$("#dsPni").find(":selected").data("report-value") +"</div>");
+          if ($("#dsInvasivePrm").val() == "involved") {
+            $("#reportText").append("<div class=\"col-sm-12\">Peripheral margin involved</div>");
+          }
+          if ($("#dsInvasiveDrm").val() == "involved") {
+            $("#reportText").append("<div class=\"col-sm-12\">Deep margin involved</div>");
+          }
+          if ($("#dsInsituPrm").val() == "involved") {
+            $("#reportText").append("<div class=\"col-sm-12\">Peripheral margin involved by in-situ component</div>");
+          }
         }
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
