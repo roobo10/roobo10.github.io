@@ -53,6 +53,21 @@
             </div>
           </div>
         </div>
+        <div class="form-group row" id="section-clark">
+          <label for="dsClarkLevel" class="col-sm-4 col-form-label">Clark Level</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 px-0">
+              <select class="form-control" id="dsClarkLevel">
+                <option value="1" data-report-value="Level I">Confined to the epidermis (melanoma in situ) (Level I)</option>
+                <option value="2" data-report-value="Level II">Invasion into the papillary dermis (Level II)</option>
+                <option value="3" data-report-value="Level III">Invasion to the junction of the papillary and reticular dermis (Level III)</option>
+                <option value="4" data-report-value="Level IV">Invasion into the reticular dermis (Level IV)</option>
+                <option value="5" data-report-value="Level V">Invasion into subcutaneous tissue (Level V)</option>
+                <option value="na" data-report-value="Not Assessable">Not Assessable</option>
+              </select>
+            </div>
+          </div>
+        </div>
         <div class="form-group row" id="section-mitoses">
           <label for="dsMitoses" class="col-sm-4 col-form-label">Mitotic Rate</label>
           <div class="col-sm-8">
@@ -98,7 +113,7 @@
           <label for="dsMicrosatellites" class="col-sm-4 col-form-label">Microsatellite/in-transit metastasis</label>
           <div class="col-sm-8">
             <select class="form-control" id="dsMicrosatellites">
-              <option value="no" data-report-value="Not Identified"selected>Not identified</option>
+              <option value="no" data-report-value="Not Identified" selected>Not identified</option>
               <option value="yes" data-report-value="Present">Present</option>
               <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
               <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
@@ -109,7 +124,7 @@
           <label for="dsPni" class="col-sm-4 col-form-label">Neurotropic/perineural invasion</label>
           <div class="col-sm-8">
             <select class="form-control" id="dsPni">
-              <option value="no" data-report-value="Not Identified selected">Not identified</option>
+              <option value="no" data-report-value="Not Identified" selected>Not identified</option>
               <option value="yes" data-report-value="Present">Present</option>
               <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
               <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
@@ -268,11 +283,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
       var debug = false;
-      if (debug)
-      {
+      if (debug) {
         $("#reportText").removeClass("d-none");
       }
-
+      else {
+        $("#reportText").addClass("d-none");
+      }
       function isNonZeroInt(str) {
         n = parseInt(str)
         return (n == 0 || isNaN(n))
@@ -421,8 +437,10 @@
           $("#reportText").append("<div class=\"col-sm-12\">- Mitotic Rate: "+$("#dsMitoses").val() +" per mm<sup>2</sup></div>");
         }
         $("#reportText").append("<div class=\"col-sm-12\">- Ulceration: "+$("#dsUlceration").find(":selected").data("report-value") +"</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Regression: "+$("#dsRegression").find(":selected").data("report-value") +"</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Clark Level: "+$("#dsClarkLevel").find(":selected").data("report-value") +"</div>");
         if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
-          $("#reportText").append("<div class=\"col-sm-12\">- Lymphovascular space invasion: "+$("#dsLvi").find(":selected").data("report-value") +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Lymphovascular space invasion: "+ $("#dsLvi").find(":selected").data("report-value") +"</div>");
           $("#reportText").append("<div class=\"col-sm-12\">- Perineural invasion: "+$("#dsPni").find(":selected").data("report-value") +"</div>");
           $("#reportText").append("<div class=\"col-sm-12\">- Microsatellite/In-transit Metastases: "+$("#dsMicrosatellites").find(":selected").data("report-value") +"</div>");
           $("#reportText").append("<div class=\"col-sm-12\">- Tumour-infiltrating lymphocytes: "+$("#dsTil").find(":selected").data("report-value") +"</div>");
@@ -461,8 +479,8 @@
         $("#reportText").append("<div class=\"col-sm-12\">" +  tumourType + " (UICC TNM8 "+staging+")</div>");
         if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
           $("#reportText").append("<div class=\"col-sm-12\">Breslow Thickness: "+$("#dsBreslowThickness").val() +"mm</div>");
-          $("#reportText").append("<div class=\"col-sm-12\">Lymphovascular Space Invasion: "+$("#dsLvi").find(":selected").data("report-value") +"</div>");
-          $("#reportText").append("<div class=\"col-sm-12\">Perineural Invasion: "+$("#dsPni").find(":selected").data("report-value") +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">Lymphovascular space invasion "+ $("#dsLvi").find(":selected").data("report-value").toLowerCase() +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">Perineural invasion "+ $("#dsPni").find(":selected").data("report-value").toLowerCase() +"</div>");
           if ($("#dsInvasivePrm").val() == "involved") {
             $("#reportText").append("<div class=\"col-sm-12\">Peripheral margin involved</div>");
           }
