@@ -173,6 +173,24 @@
               </div>
             </div>
           </div>
+          <div class="form-group row">
+            <label for="dsInsituDrm" class="col-sm-4 col-form-label">Deep Margin</label>
+            <div class="col-sm-8 row">
+              <select class="form-control col-sm-3" id="dsInsituDrm">
+                <option value="clear">Not Involved</option>
+                <option value="involved">Involved</option>
+                <option value="uncertain">Uncertain</option>
+                <option value="na">Not Applicable</option>
+              </select>
+              <div id="dsInsituDrmDistanceBox" class="col-sm-9 row">
+                <div class="mx-1 col-sm-1 text-center">-</div>
+                <input class="form-control col-sm-3" type="text" id="dsInsituDrmDistance" data-required="true"/>
+                <div class="col-sm-6">
+                  &nbsp;mm from margin.
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="margin-invasive-section">
           <h3>Invasive Component</h3>
@@ -276,14 +294,35 @@
         </div>
       </div>
     </div>
-
-
-
+    <script src="../lib/js/utils.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
+      var urlParams = getParameters();
+      if("type" in urlParams)
+      {
+        $("#dsTumourType").val(urlParams['type']);
+        if (urlParams['type'].startsWith("insitu")){
+          $("#dsClarkLevel").val("1");
+        }
+        else
+        {
+          $("#dsClarkLevel").val("2");
+        }
+      }
+      else
+      {
+        $("#dsClarkLevel").val("2");
+      }
+      var tempClark = $("#dsClarkLevel").find(":selected").val()
       var debug = false;
+
+      if("debug" in urlParams)
+      {
+        debug = urlParams["debug"] == "true" ? true : false;
+      }
+
       if (debug) {
         $("#reportText").removeClass("d-none");
       }
@@ -326,18 +365,30 @@
           $("#section-microsatellite").addClass("d-none")
           $("#section-growth-phase").addClass("d-none")
           $("#section-ulceration").addClass("d-none")
+          $("#margin-invasive-section").addClass("d-none")
+          $("#dsInsituDrm").parent().parent().removeClass("d-none");
+          $("#dsClarkLevel > option[value='1']").removeAttr('disabled');
+          $("#dsClarkLevel").val(1)
+          $("#dsClarkLevel").prop("disabled",true)
         }
 
         if ($("#dsTumourType").val().startsWith("invasive-")) {
-          $("#section-breslow").removeClass("d-none")
-          $("#section-mitoses").removeClass("d-none")
-          $("#section-lvi").removeClass("d-none")
-          $("#section-pni").removeClass("d-none")
-          $("#section-til").removeClass("d-none")
-          $("#section-microsatellite").removeClass("d-none")
-          $("#section-growth-phase").removeClass("d-none")
-          $("#section-ulceration").removeClass("d-none")
-
+          $("#section-breslow").removeClass("d-none");
+          $("#section-mitoses").removeClass("d-none");
+          $("#section-lvi").removeClass("d-none");
+          $("#section-pni").removeClass("d-none");
+          $("#section-til").removeClass("d-none");
+          $("#section-microsatellite").removeClass("d-none");
+          $("#section-growth-phase").removeClass("d-none");
+          $("#section-ulceration").removeClass("d-none");
+          $("#margin-invasive-section").removeClass("d-none");
+          $("#dsInsituDrm").parent().parent().addClass("d-none");
+          $("#dsClarkLevel > option[value='1']").prop("disabled",true);
+          $("#dsClarkLevel").removeAttr('disabled');
+          if ($("#dsClarkLevel").find(":selected").val() != "1") {
+            tempClark = $("#dsClarkLevel").find(":selected").val();
+          }
+          $("#dsClarkLevel").val(tempClark);
         }
 
         if($("#dsInsituPrm").val() != "clear")
@@ -434,10 +485,12 @@
         var tumourType = !$("#dsTumourType").find(":selected").val().endsWith("other") ? $("#dsTumourType").find(":selected").data("report-value") :$("#dsTumourTypeText").val();
         $("#reportText").append("<div class=\"col-sm-12\">- Tumour type: "+ tumourType +"</div>");
         if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
-          $("#reportText").append("<div class=\"col-sm-12\">- Breslow Thickness: "+$("#dsBreslowThickness").val() +"mm</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Breslow Thickness: "+$("#dsBreslowThickness").val() +" mm</div>");
           $("#reportText").append("<div class=\"col-sm-12\">- Mitotic Rate: "+$("#dsMitoses").val() +" per mm<sup>2</sup></div>");
         }
-        $("#reportText").append("<div class=\"col-sm-12\">- Ulceration: "+$("#dsUlceration").find(":selected").data("report-value") +"</div>");
+        if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
+          $("#reportText").append("<div class=\"col-sm-12\">- Ulceration: "+$("#dsUlceration").find(":selected").data("report-value") +"</div>");
+        }
         $("#reportText").append("<div class=\"col-sm-12\">- Regression: "+$("#dsRegression").find(":selected").data("report-value") +"</div>");
         $("#reportText").append("<div class=\"col-sm-12\">- Clark Level: "+$("#dsClarkLevel").find(":selected").data("report-value") +"</div>");
         if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
@@ -450,11 +503,14 @@
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Margins</div>");
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: none;\">In-situ Component</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Peripheral margin: "+ ($("#dsInsituPrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInsituPrmDistance").val()))? $("#dsInsituPrm").find(":selected").text() :"") + ($("#dsInsituPrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInsituPrmDistance").val())) ? " " + $("#dsInsituPrmDistance").val() + " mm from the margin." : "")+"</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Peripheral margin: "+ ($("#dsInsituPrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInsituPrmDistance").val()))? $("#dsInsituPrm").find(":selected").text() :"") + ($("#dsInsituPrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInsituPrmDistance").val())) ? " " + $("#dsInsituPrmDistance").val() + " mm from the margin" : "")+"</div>");
+        if ($("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
+          $("#reportText").append("<div class=\"col-sm-12\">- Peripheral margin: "+ ($("#dsInsituPrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInsituPrmDistance").val()))? $("#dsInsituPrm").find(":selected").text() :"") + ($("#dsInsituPrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInsituPrmDistance").val())) ? " " + $("#dsInsituPrmDistance").val() + " mm from the margin" : "")+"</div>");
+        }
         if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
           $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: none;\">Invasive Component</div>");
-          $("#reportText").append("<div class=\"col-sm-12\">- Peripheral margin: "+ ($("#dsInvasivePrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInvasivePrmDistance").val()))? $("#dsInvasivePrm").find(":selected").text():"") + ($("#dsInvasivePrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInvasivePrmDistance").val())) ? " " + $("#dsInvasivePrmDistance").val() + " mm from the margin." : "")+"</div>");
-          $("#reportText").append("<div class=\"col-sm-12\">- Deep margin: "+($("#dsInvasiveDrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInvasiveDrmDistance").val()))? $("#dsInvasiveDrm").find(":selected").text():"") + ($("#dsInvasiveDrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInvasiveDrmDistance").val())) ? " " + $("#dsInvasiveDrmDistance").val() + " mm from the margin." : "")+"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Peripheral margin: "+ ($("#dsInvasivePrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInvasivePrmDistance").val()))? $("#dsInvasivePrm").find(":selected").text():"") + ($("#dsInvasivePrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInvasivePrmDistance").val())) ? " " + $("#dsInvasivePrmDistance").val() + " mm from the margin" : "")+"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Deep margin: "+($("#dsInvasiveDrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInvasiveDrmDistance").val()))? $("#dsInvasiveDrm").find(":selected").text():"") + ($("#dsInvasiveDrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInvasiveDrmDistance").val())) ? " " + $("#dsInvasiveDrmDistance").val() + " mm from the margin" : "")+"</div>");
         }
 
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
