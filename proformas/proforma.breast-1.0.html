@@ -116,7 +116,39 @@
           </div>
         </div>
       </div>
-
+      <h2>Neoadjuvant Therapy Response</h2>
+      <div class="form-group row">
+        <label for="r-neoadjuvant-given" class="col-sm-4 col-form-label">Neoadjuvant therapy given</label>
+        <div class="col-sm-8">
+          <select class="form-control" id="r-neoadjuvant-given">
+            <option value="no"> No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="r-neoadjuvant-breast-response" class="col-sm-4 col-form-label">Breast disease response</label>
+        <div class="col-sm-8">
+          <select class="form-control" id="r-neoadjuvant-breast-response">
+            <option value="1">Complete pathological response</option>
+            <option value="2">Partial response to therapy</option>
+            <option value="2A">Minimal residual disease/near total effect typically (&lt;10% of tumour remaining)</option>
+            <option value="2B">Evidence of response but significant tumour remaining (&gt;10% of tumour remaining)</option>
+            <option value="3">No evidence of response to therapy</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="r-neoadjuvant-node-response" class="col-sm-4 col-form-label">Lymph node disease response</label>
+        <div class="col-sm-8">
+          <select class="form-control" id="r-neoadjuvant-node-response">
+            <option value="1">No evidence of metastatic disease and no evidence of changes in the lymph nodes</option>
+            <option value="2">Metastatic tumour not detected but evidence of response</option>
+            <option value="3">Metastatic disease present but also evidence of response</option>
+            <option value="4">Metastatic disease present with no evidence of response to therapy</option>
+          </select>
+        </div>
+      </div>
       <h2>Comments</h2>
       <div class="form-group row">
         <label for="r-comments" class="col-sm-4 col-form-label">Other comments</label>
@@ -131,8 +163,37 @@
       <div id="receptors">
 
       </div>
-
-      <button onclick="copyToClipboard()" class="btn btn-lg btn-primary float-right mt-4 mb-4"><i class="fas fa-file-word"></i>&nbsp;&nbsp;Copy To Clipboard</button>
+      <h2>Genetics</h2>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Best Tumour Block</label>
+        <div class="col-sm-8">
+          <div class="row col-sm-12">
+            <div class="col-sm-6 form-inline">
+              <label for="dsGeneticsTumour1" class="col-sm-7 col-form-label">Tumour Block</label>
+              <input type="text" class="form-control col-sm-3" id="dsGeneticsBestTumour1">
+            </div>
+            <div class="col-sm-6 form-inline">
+              <label for="dsGeneticsTumourPercentage1" class="col-sm-7 col-form-label">Percentage Tumour</label>
+              <input type="text" class="form-control col-sm-3" id="dsGeneticsTumourPercentage1"><div class="col-sm-1">%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="dsGeneticsNormal" class="col-sm-4 col-form-label">Best Normal Control</label>
+        <div class="col-sm-8">
+          <div class="col-sm-12 row">
+            <input type="text" class="form-control col-sm-2" id="dsGeneticsNormal">
+          </div>
+        </div>
+      </div>
+      <div id="reportText" class="">
+      </div>
+      <div class="row my-2">
+        <div class="col-sm-12">
+          <button onclick="copyToClipboard()" class="btn btn-lg btn-primary float-right mt-4 mb-4"><i class="fas fa-file-word"></i>&nbsp;&nbsp;Copy To Clipboard</button>
+        </div>
+      </div>
     </div>
     <div id="tumour-template" class="d-none">
       <div class="tumour-close-button float-right">
@@ -140,7 +201,7 @@
       </div>
       <h2 class="tumour-heading">Tumour</h2>
       <div class="form-group row">
-        <label for="r-tumour-description" class="col-sm-4 col-form-label">Description (leave blank if none)</label>
+        <label for="r-tumour-description" class="col-sm-4 col-form-label">Tumour Label (leave blank if none)</label>
         <div class="col-sm-8">
           <input type="text" class="form-control col-sm-12" id="r-tumour-description" />
         </div>
@@ -176,6 +237,9 @@
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="checkbox" value="other"  id="r-other-tumour">
               <label class="form-check-label" for="r-other-tumour" data-report-text="Other">Other</label>
+            </div>
+            <div class="container-other-tumour-text form-group">
+              <input type="text" class="form-control col-sm-12" id="r-other-tumour-text">
             </div>
           </div>
         </div>
@@ -232,6 +296,15 @@
         </div>
       </div>
       <div class="form-group row">
+        <label for="r-plcis" class="col-sm-4 col-form-label">Pleomohic Lobular Carcinoma In-Situ</label>
+        <div class="col-sm-8">
+          <select class="form-control" id="r-plcis">
+            <option value="0">Not Present</option>
+            <option value="1">Present</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
         <label for="r-its" class="col-sm-4 col-form-label">Invasive Tumour Size</label>
         <div class="col-sm-8">
           <div class="col-sm-12 row">
@@ -250,7 +323,7 @@
     </div>
 
     <div class="row my-1 d-none" id="margin-template">
-      <select class="col-sm-3 form-control mr-1" id="r-margin-location">
+      <select class="col-sm-2 form-control mr-2" id="r-margin-location">
         <option value="superior">Superior</option>
         <option value="lateral">Lateral</option>
         <option value="inferior">Inferior</option>
@@ -264,15 +337,19 @@
         <option value="unassessable">Unassessable</option>
       </select>
       <select class="col-sm-2 form-control" onchange="changedMargin(this)" id="r-margin-involved">
-        <option value="uninvolved">Clear</option>
-        <option value="involved">Involved</option>
+        <option value="uninvolved" data-report-text="Clear">Clear</option>
+        <option value="involved" data-report-text="Involved by carcinoma">Involved (Carcinoma)</option>
+        <option value="involved" data-report-text="Involved by DCIS">Involved (DCIS)</option>
+        <option value="involved" data-report-text="Involved by Pleomohic LCIS">Involved (PLCIS)</option>
+        <option value="involved" data-report-text="Involved by carcinoma and DCIS">Involved (Carcinoma &amp; DCIS)</option>
+        <option value="involved" data-report-text="Involved by carcinoma and Pleomohic LCIS">Involved (Carcinoma &amp; PLCIS)</option>
+        <option value="involved" data-report-text="Involved">Involved</option>
       </select>
       <input type="text" class="form-control col-sm-1 ml-1 mr-0" id="r-margin-distance">
       <div class="col-sm-3 pl-1" id="r-margin-distance-label">mm from margin</div> <button class="btn btn-sm btn-outline-danger my-1 ml-2 margin-remove-button" onclick="removeMargin(this)"><i class="fas fa-times"></i>&nbsp;&nbsp;Remove</button>
     </div>
-
     <div class="row my-1 d-none" id="shavings-template">
-      <select class="col-sm-3 form-control mr-1" id="r-cs-location">
+      <select class="col-sm-2 form-control mr-2" id="r-cs-location">
         <option value="superior">Superior</option>
         <option value="lateral">Lateral</option>
         <option value="inferior">Inferior</option>
@@ -286,12 +363,18 @@
         <option value="unassessable">Unassessable</option>
       </select>
       <select class="col-sm-4 form-control" onchange="changedShaving(this)" id="r-cs-involved">
-        <option value="uninvolved">Clear</option>
-        <option value="involved">Involved (Carcinoma)</option>
-        <option value="involved">Involved (DCIS)</option>
-        <option value="involved">Involved (Carcinoma &amp; DCIS)</option>
-        <option value="involved">Involved</option>
-        <option value="involved_margin">Involved at the margin</option>
+        <option value="uninvolved" data-report-text="Clear">Clear</option>
+        <option value="involved" data-report-text="Involved by carcinoma">Involved (Carcinoma)</option>
+        <option value="involved" data-report-text="Involved by DCIS">Involved (DCIS)</option>
+        <option value="involved" data-report-text="Involved by Pleomorphic LCIS">Involved (Pleomohic LCIS)</option>
+        <option value="involved" data-report-text="Involved by carcinoma and DCIS">Involved (Carcinoma &amp; DCIS)</option>
+        <option value="involved" data-report-text="Involved by carcinoma and pleomohic LCIS">Involved (Carcinoma &amp; Pleomohic LCIS)</option>
+        <option value="involved" data-report-text="Involved">Involved</option>
+        <option value="involved_margin" data-report-text="Margin involved by carcinoma">Margin involved (Carcinoma)</option>
+        <option value="involved_margin" data-report-text="Margin involved by DCIS">Margin involved (DCIS)</option>
+        <option value="involved_margin" data-report-text="Margin involved by Pleomorphic LCIS">Margin involved (Pleomohic LCIS)</option>
+        <option value="involved_margin" data-report-text="Margin involved by carcinoma and DCIS">Margin involved (Carcinoma &amp; DCIS)</option>
+        <option value="involved_margin" data-report-text="Margin involved by carcinoma and pleomohic LCIS">Margin involved (Carcinoma &amp; Pleomohic LCIS)</option>
       </select>
       <input type="text" class="form-control col-sm-1 ml-1 mr-0 d-none" id="r-cs-distance">
       <div class="col-sm-2 p-0 ml-1 d-none" id="r-cs-distance-label">mm from margin</div><div class=""><button class="btn btn-sm btn-outline-danger my-1 ml-2 cs-remove-button" onclick="removeShaving(this)"><i class="fas fa-times"></i>&nbsp;Remove</button></div>
@@ -326,28 +409,34 @@
         </div>
       </div>
     </div>
-
-    <div id="reportText" class="">
-    </div>
   </div>
-
+    <script src="../lib/js/utils.js" type="text/javascript"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js"></script>
     <script>
+      var urlParams = getParameters();
 
       var debug = false;
+
+      if("debug" in urlParams)
+      {
+        debug = urlParams["debug"] == "true" ? true : false;
+      }
+
       if (debug) {
         $("#reportText").removeClass("d-none");
       }
       else {
         $("#reportText").addClass("d-none");
       }
+
       $(function () {
         $('[data-toggle="tooltip"]').tooltip()
       })
-
 
       var tumourCount = 1;
       var tumourId = 0;
@@ -621,11 +710,44 @@
           }
         })
       }
+
       function updateReport() {
         //attach events
         attachEvents();
 
         errorChecks();
+
+        //alterations
+        $("select[id^=r-margin-involved]").each(function (i) {
+          if ($(this).val() == "uninvolved") {
+            $(this).addClass("col-sm-2")
+            $(this).removeClass("col-sm-6")
+          }
+          else {
+            $(this).removeClass("col-sm-2")
+            $(this).addClass("col-sm-6")
+          }
+        });
+
+        $("select[id^=r-cs-involved]").each(function (i) {
+          if ($(this).val() == "involved") {
+            $(this).addClass("col-sm-5")
+            $(this).removeClass("col-sm-7")
+          }
+          else {
+            $(this).removeClass("col-sm-5")
+            $(this).addClass("col-sm-7")
+          }
+        });
+
+        if ($("#r-neoadjuvant-given").val() == "no") {
+          $("#r-neoadjuvant-breast-response").parent().parent().addClass("d-none")
+          $("#r-neoadjuvant-node-response").parent().parent().addClass("d-none")
+        }
+        else {
+          $("#r-neoadjuvant-breast-response").parent().parent().removeClass("d-none")
+          $("#r-neoadjuvant-node-response").parent().parent().removeClass("d-none")
+        }
 
         $("#reportText").empty();
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline; text-transform:uppercase;\">Breast Cancer Proforma</div>");
@@ -638,6 +760,16 @@
             $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
             $("#reportText").append("<div style=\"font-weight: bold;\">"+heading+"</div>")
           }
+
+          if($(this).find("input[type=checkbox][id^=r-other-tumour]").is(":checked"))
+          {
+            $(this).find("input[id^=r-other-tumour-text]").removeClass("d-none");
+          }
+          else
+          {
+            $(this).find("input[id^=r-other-tumour-text]").addClass("d-none");
+          }
+
           tumourTypes = $(this).find("input[type=checkbox]:checked")
           var tumourTypesText = ""
           if (tumourTypes.length > 1) {
@@ -649,12 +781,13 @@
               else if (i == tumourTypes.length-1){
                 tumourTypesText = tumourTypesText + " and "
               }
-              tumourTypesText = tumourTypesText + $(this).siblings("label").data("report-text");
+              var appendText = ($(this).val() == "other") ? $(this).parent().siblings("div.container-other-tumour-text").find("input[id^=r-other-tumour-text]").val() : $(this).siblings("label").data("report-text") ;
+              tumourTypesText = tumourTypesText + appendText;
             })
             tumourTypesText = tumourTypesText + ")";
           }
           else {
-            tumourTypesText = $(tumourTypes.get(0)).siblings("label").data("report-text")
+            tumourTypesText = ($(tumourTypes.get(0)).val() == "other") ? $(tumourTypes.get(0)).parent().siblings("div.container-other-tumour-text").find("input[id^=r-other-tumour-text]").val() : $(tumourTypes.get(0)).siblings("label").data("report-text")
           }
           tumourGradeT = parseInt($(this).find("select[id^=tg-tubules-]").val())
           tumourGradeP = parseInt($(this).find("select[id^=tg-pleomorphism-]").val())
@@ -671,6 +804,9 @@
           $("#reportText").append("<div class=\"col-sm-12\">- Tumour grade: "+ tumourGrade +" (T"+tumourGradeT+", P" + tumourGradeP + ", M" + tumourGradeM +")</div>");
           $("#reportText").append("<div class=\"col-sm-12\">- Invasive tumour size: "+ $(this).find("input[id^=r-its]").val() +"mm </div>");
           $("#reportText").append("<div class=\"col-sm-12\">- Ductal carcinoma in-situ: "+ $(this).find("select[id^=r-dcis]").find(":selected").text() +"</div>");
+          if ($(this).find("select[id^=r-plcis]").find(":selected").val()==1) {
+            $("#reportText").append("<div class=\"col-sm-12\">- Pleomophic lobular carcinoma in-situ: "+ $(this).find("select[id^=r-plcis]").find(":selected").text() +"</div>");
+          }
           $("#reportText").append("<div class=\"col-sm-12\">- Whole tumour size: "+ $(this).find("input[id^=r-wts]").val() +"mm </div>");
           $("#reportText").append("<div class=\"col-sm-12\">- Lymphovascular space invasion: "+ $(this).find("select[id^=r-lvi]").find(":selected").text() +"</div>");
         })
@@ -691,7 +827,7 @@
             distance =  measurement + " from margin"
           }
           else {
-            distance = "Involved"
+            distance = $(this).find("select[id^=r-margin-involved] > option:selected").data("report-text")
           }
           $("#reportText").append("<div class=\"col-sm-12\"> - "+$(this).find("select[id^=r-margin-location]").find(":selected").text()+" margin: " + distance +  "</div>")
         })
@@ -708,7 +844,7 @@
                 distance = " - " + parseInt($(this).find("input[id^=r-cs-distance]").val()) + "mm from margin."
               }
             }
-            $("#reportText").append("<div class=\"col-sm-12\"> - "+$(this).find("select[id^=r-cs-location]").find(":selected").text()+" cavity shaving: " + $(this).find("select[id^=r-cs-involved]").find(":selected").text() + distance + "</div>")
+            $("#reportText").append("<div class=\"col-sm-12\"> - "+$(this).find("select[id^=r-cs-location]").find(":selected").text()+" cavity shaving: " + $(this).find("select[id^=r-cs-involved]").find(":selected").data("report-text") + distance + "</div>")
           })
         }
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
@@ -721,11 +857,24 @@
           $("#reportText").append("<div class=\"col-sm-12\"> - Nodes with micrometastases: " + parseInt($("#r-micrometastases").val()) + "</div>")
           $("#reportText").append("<div class=\"col-sm-12\"> - Nodes with isolated tumour cells: " + parseInt($("#r-itc").val()) + "</div>")
         }
+
+        if ($("#r-neoadjuvant-given").val() == "yes") {
+          $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>")
+          $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline;\">Response to Neoadjuvant Therapy</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">Breast disease response: "+ $("#r-neoadjuvant-breast-response > :selected").text() +" ("+$("#r-neoadjuvant-breast-response > :selected").val()+")</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">Lymph node disease response: "+ $("#r-neoadjuvant-node-response > :selected").text() +" ("+$("#r-neoadjuvant-breast-response > :selected").val()+")</div>");
+        }
+
         if ($("#r-comments").val().length) {
           $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>")
           $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline;\">Comments</div>");
           $("#reportText").append("<div class=\"col-sm-12\"> "+ $("#r-comments").val() +"</div>");
         }
+
+        $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Molecular Testing</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Best block for testing: "+$("#dsGeneticsBestTumour1").val() +" (Tumour content: " + parseInt($("#dsGeneticsTumourPercentage1").val()) +"%)");
+        $("#reportText").append("<div class=\"col-sm-12\">- Best block for normal control: "+$("#dsGeneticsNormal").val() +"</div>");
 
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration:underline;\">Summary</div>");
