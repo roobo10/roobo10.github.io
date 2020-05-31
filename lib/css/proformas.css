@@ -1,0 +1,13 @@
+#reportText {
+  font-family: "Times New Roman"; font-size: 11pt;
+}
+.report-title {
+  font-size: 11pt;
+  font-weight: bold;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+.report-heading {
+  font-weight: bold;
+  text-decoration: underline;
+}

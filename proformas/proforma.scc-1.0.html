@@ -1,0 +1,457 @@
+<html>
+  <head>
+    <title>Malignant Melanoma</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/proforma.css">
+  </head>
+  <body onload="updateReport()">
+    <div class="container my-3">
+      <h1>Skin SCC Proforma</h1>
+      <p class='lead'>version 1.0</p>
+      <p class="mb-5">If you notice something that doesn't work as you think it should, <a href="https://github.com/roobo10/roobo10.github.io/issues/new">please log it here</a>.
+      <form>
+        <div class="form-group row">
+          <label for="dsTumourType" class="col-sm-4 col-form-label">Tumour Type</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 px-0">
+              <select class="form-control" id="dsTumourType" disabled>
+                <option value="scc" data-report-value="Squamous Cell Carcinoma">Squamous Cell Carcinoma</option>
+              </select>
+            </div>
+            <div class="col-sm-12 px-0">
+              <input type="text" class="form-control my-2 d-none" id="dsTumourTypeText" data-required="true">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="dsTumourSubtype" class="col-sm-4 col-form-label">Tumour Subype</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 px-0">
+              <select class="form-control" id="dsTumourSubtype">
+                <option value="nst" data-report-value="No Special Type">No special type (classic)</option>
+                <option value="nst-with-bowens" data-report-value="No special type with adjecent Bowen's">No special type (classic) with adjacent Bowen’s</option>
+                <option value="verrucous" data-report-value="Verrucous">Verrucous</option>
+                <option value="acantholytic" data-report-value="Acantholytic">Acantholytic (pseudoglandular/adenoid/pseudovascular)</option>
+                <option value="desmoplastic" data-report-value="Desmoplastic">Desmoplastic</option>
+                <option value="sarcomatoid" data-report-value="Spindle cell/sarcomatoid">Spindle/sarcomatoid</option>
+                <option value="Keratoacanthoma-like" data-report-value="Keratoacanthoma-like">Keratoacanthoma-like</option>
+                <option value="desmoplastic" data-report-value="Desmoplastic">Desmoplastic</option>
+                <option value="follicular" data-report-value="Follicular">Follicular</option>
+                <option value="adenosquamous" data-report-value="Adenosquamous (SCC with divergent differentiation)">Adenosquamous (SCC with divergent differentiation)</option>
+                <option value="other" data-report-value="Other">Other</option>
+              </select>
+            </div>
+            <div class="col-sm-12 px-0">
+              <input type="text" class="form-control my-2 d-none" id="dsTumourSubtypeText" data-required="true">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="dsTumourDifferentiation" class="col-sm-4 col-form-label">Tumour Differentiation</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 px-0">
+              <select class="form-control" id="dsTumourDifferentiation">
+                <option value="well" data-report-value="Well-Differentiated">Well-Differentiated</option>
+                <option value="mod" data-report-value="Moderately Differentiated">Moderately Differentiated</option>
+                <option value="poor" data-report-value="Poorly Differentiated">Poorly Differentiated</option>
+              </select>
+            </div>
+            <div class="col-sm-12 px-0">
+              <input type="text" class="form-control my-2 d-none" id="dsTumourTypeText" data-required="true">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row" id="section-max-dimension">
+          <label for="dsMaxDimension" class="col-sm-4 col-form-label">Maximum Dimension</label>
+          <div class="col-sm-8 row ml-1">
+            <div class="col-sm-12 row">
+              <input type="text" class="form-control col-sm-2" id="dsMaxDimension" data-required="true">
+              <div class="col-sm-2">mm</div>
+                <select class="form-control col-sm-3" id="dsMeasurementType">
+                  <option value="clinical" data-report-value="Clinical measurement">Clinical</option>
+                  <option value="macro" data-report-value="Macroscopic measurement" select>Macroscopic</option>
+                  <option value="micro" data-report-value="select measurement">Microscopic</option>
+                </select>
+          </div>
+
+          </div>
+        </div>
+        <div class="form-group row" id="section-depth-of-invasion">
+          <label for="dsDepthOfInvasion" class="col-sm-4 col-form-label">Depth of Invasion (from nearest normal epidermis)</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 row">
+              <input type="text" class="form-control col-sm-2" id="dsDepthOfInvasion" data-required="true"><div class="col-sm-3">mm</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row" id="section-level-of-invasion">
+          <label for="dsLevelOfInvasion" class="col-sm-4 col-form-label">Level of Invasion</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 px-0">
+              <select class="form-control" id="dsLevelOfInvasion">
+                <option value="clark-1" data-report-value="Level I" disabled>Confined to the epidermis (Clark Level I)</option>
+                <option value="clark-2" data-report-value="Level II">Invasion into the papillary dermis (Clark Level II)</option>
+                <option value="clark-3" data-report-value="Level III">Invasion to the junction of the papillary and reticular dermis (Clark Level III)</option>
+                <option value="clark-4" data-report-value="Level IV">Invasion into the reticular dermis (Clark Level IV)</option>
+                <option value="clark-5" data-report-value="Level V">Invasion into subcutaneous tissue (Clark Level V)</option>
+                <option value="beyond-subcutis" data-report-value="Beyond">Beyond the subcutaneous tissue</option>
+                <option value="na" data-report-value="Not Assessable">Not Assessable</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row" id="section-beyond-subcutis">
+          <label for="dsInvasionBeyondSubcutis" class="col-sm-4 col-form-label">If beyond subcutis</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 px-0">
+              <select class="form-control" id="dsInvasionBeyondSubcutis">
+                <option value="Fat" data-report-value="Fascia">Fascia</option>
+                <option value="muscle" data-report-value="Muscle">Muscle</option>
+                <option value="perichondrium" data-report-value="Perichondrium">Perichondrium</option>
+                <option value="cartilage" data-report-value="Cartilage">Cartilage</option>
+                <option value="tendon" data-report-value="Paratendon/Tendon">Paratendon/tendon</option>
+                <option value="periosteum" data-report-value="Periosteum">Periosteum</option>
+                <option value="bone" data-report-value="Bone">Bone</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row" id="section-bone-invasion">
+          <div class="form-group row col-sm-12 pr-0 mr-0">
+            <label for="dsMinorBoneErosion" class="col-sm-4 col-form-label">Minor bone erosion</label>
+            <div class="col-sm-8 pr-0">
+              <div class="col-sm-12 px-0">
+                <select class="form-control" id="dsMinorBoneErosion">
+                  <option value="no" data-report-value="Not Identified" selected>Not identified</option>
+                  <option value="yes" data-report-value="Present">Present</option>
+                  <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
+                  <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row col-sm-12 pr-0 mr-0">
+            <label for="dsInvasionIntoBoneCortex" class="col-sm-4 col-form-label">Gross cortical/marrow invasion (pT4a)</label>
+            <div class="col-sm-8 pr-0">
+              <div class="col-sm-12 px-0">
+                <select class="form-control" id="dsInvasionIntoBoneCortex">
+                  <option value="no" data-report-value="Not Identified" selected>Not identified</option>
+                  <option value="yes" data-report-value="Present">Present</option>
+                  <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
+                  <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row col-sm-12 pr-0 mr-0">
+            <label for="dsInvasionIntoAxialBone" class="col-sm-4 col-form-label">Axial/skull base/foraminal invasion (pT4b)</label>
+            <div class="col-sm-8 pr-0">
+              <div class="col-sm-12 px-0">
+                <select class="form-control" id="dsInvasionIntoAxialBone">
+                  <option value="no" data-report-value="Not Identified" selected>Not identified</option>
+                  <option value="yes" data-report-value="Present">Present</option>
+                  <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
+                  <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row" id="section-lvi">
+          <label for="dsLvi" class="col-sm-4 col-form-label">Lymphocasvular Invasion</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="dsLvi">
+              <option value="no" data-report-value="Not Identified" selected>Not identified</option>
+              <option value="yes" data-report-value="Present">Present</option>
+              <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
+              <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" id="section-pni">
+          <label for="dsPni" class="col-sm-4 col-form-label">Perineural invasion</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="dsPni">
+              <option value="no" data-report-value="Not Identified" selected>Not identified</option>
+              <option value="yes" data-report-value="Present">Present</option>
+              <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
+              <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" id="section-pni-details">
+          <label for="dsPniDetails" class="col-sm-4 col-form-label">Details of perineural invasion</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="dsPniDetails">
+              <option value="not-pt3" data-report-value="Does not upstage to pT3" selected>Does not upstage to pT3</option>
+              <option value="named-nerve" data-report-value="involves named nerve">Named nerve (pT3)</option>
+              <option value="big-nerve" data-report-value="involves nerve >0.1mm across">&gt;0.1mm (pT3)</option>
+              <option value="beyond-dermis" data-report-value="beyond the dermis">Beyond dermis pT3)</option>
+            </select>
+          </div>
+        </div>
+
+        <h2>Margins</h2>
+        <div id="margin-invasive-section">
+          <div class="form-group row">
+            <label for="dsInvasivePrm" class="col-sm-4 col-form-label">Peripheral Margin</label>
+            <div class="col-sm-8 row">
+              <select class="form-control col-sm-3" id="dsInvasivePrm">
+                <option value="clear">Not Involved</option>
+                <option value="involved">Involved</option>
+                <option value="uncertain">Uncertain</option>
+                <option value="na">Not Applicable</option>
+              </select>
+              <div id="dsInvasivePrmDistanceBox"  class="col-sm-9 row">
+                <div class="mx-1 col-sm-1 text-center">-</div>
+                <input class="form-control col-sm-3" type="text" id="dsInvasivePrmDistance" data-required="true"/>
+                <div class="col-sm-6">
+                  &nbsp;mm from margin.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="dsInvasiveDrm" class="col-sm-4 col-form-label">Deep Margin</label>
+            <div class="col-sm-8 row">
+              <select class="form-control col-sm-3" id="dsInvasiveDrm">
+                <option value="clear">Not Involved</option>
+                <option value="involved">Involved</option>
+                <option value="uncertain">Uncertain</option>
+                <option value="na">Not Applicable</option>
+              </select>
+              <div id="dsInvasiveDrmDistanceBox" class="col-sm-9 row">
+                <div class="mx-1 col-sm-1 text-center">-</div>
+                <input class="form-control col-sm-3" type="text" id="dsInvasiveDrmDistance" data-required="true"/>
+                <div class="col-sm-6">
+                  &nbsp;mm from margin.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h2>Background Lesions</h2>
+        <div class="form-group row">
+          <label for="dsBackgroudLesions" class="col-sm-4 col-form-label">Description of background abnormalities</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 row">
+              <textarea id="dsBackgroudLesions" class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <h2>Comments</h2>
+        <div class="form-group row">
+          <label for="dsComments" class="col-sm-4 col-form-label">Other comments</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 row">
+              <textarea id="dsComments" class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row d-none" id="reportText">
+      </div>
+      <div class="row my-2">
+        <div class="col-sm-12">
+          <button type="button" class="btn btn-primary btn-lg float-right" onclick="copyToClipboard();">Copy to Clipboard</button>
+        </div>
+      </div>
+    </div>
+    <script src="../lib/js/utils.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+      var urlParams = getParameters();
+
+      var debug = false;
+
+      if("debug" in urlParams)
+      {
+        debug = urlParams["debug"] == "true" ? true : false;
+      }
+
+      if (debug) {
+        $("#reportText").removeClass("d-none");
+      }
+      else {
+        $("#reportText").addClass("d-none");
+      }
+
+      function isNonZeroInt(str) {
+        n = parseInt(str)
+        return (n == 0 || isNaN(n))
+      }
+
+      function copyToClipboard() {
+        var str = document.getElementById('reportText').innerHTML;
+
+        function listener(e) {
+          e.clipboardData.setData("text/html", str);
+          e.clipboardData.setData("text/plain", str);
+          e.preventDefault();
+        }
+        document.addEventListener("copy", listener);
+        document.execCommand("copy");
+        document.removeEventListener("copy", listener);
+      };
+
+      function updateReport() {
+        //Dynamic Fields
+        //alert($('#dsTumourSubtype').val())
+        if ($('#dsTumourSubtype').val().endsWith("other")) {
+          $('#dsTumourSubtypeText').removeClass("d-none")
+        }
+        else {
+          $('#dsTumourSubtypeText').addClass("d-none")
+        }
+        if ($("#dsLevelOfInvasion").val() == 'beyond-subcutis') {
+          $("#section-beyond-subcutis").removeClass("d-none")
+        }
+        else {
+          $("#section-beyond-subcutis").addClass("d-none")
+        }
+      if ($("#dsLevelOfInvasion").val() == 'beyond-subcutis' && $("#dsInvasionBeyondSubcutis").val() == 'bone') {
+        $("#section-bone-invasion").removeClass("d-none")
+      }
+      else {
+        $("#section-bone-invasion").addClass("d-none")
+      }
+
+      if ($("#dsPni").val() == 'yes') {
+        $("#section-pni-details").removeClass("d-none")
+      }
+      else {
+        $("#section-pni-details").addClass("d-none")
+      }
+
+
+        if($("#dsInvasivePrm").val() != "clear")
+        {
+          $("#dsInvasivePrmDistanceBox").addClass("d-none");
+        }
+        else
+        {
+          $("#dsInvasivePrmDistanceBox").removeClass("d-none");
+        }
+
+        if($("#dsInvasiveDrm").val() != "clear")
+        {
+          $("#dsInvasiveDrmDistanceBox").addClass("d-none");
+        }
+        else
+        {
+          $("#dsInvasiveDrmDistanceBox").removeClass("d-none");
+        }
+
+        //Consistency Checking
+        $("input[data-required]").each(function(){
+          if ($.trim($(this).val()) == ""){
+            $(this).addClass("bg-danger");
+            $(this).addClass("text-white");
+          }
+          else {
+            $(this).removeClass("bg-danger");
+            $(this).removeClass("text-white");
+
+          }
+        })
+
+        //Staging
+        var depthOfInvasion = parseFloat($("#dsDepthOfInvasion").val());
+        var maxDimension = parseFloat($("#dsMaxDimension").val());
+        var staging = "pT1";
+        if(maxDimension > 20){
+            staging = "pT2";
+        }
+
+       if (maxDimension > 40
+            || depthOfInvasion > 6
+            || $("#dsLevelOfInvasion").val() == "beyond-subcutis"
+            || ($("#dsPni").val() == "yes" && $("#dsPniDetails").val() != "not-pt3" )) {
+          staging = "pT3";
+        }
+
+        if ( $("#dsLevelOfInvasion").val() == "beyond-subcutis"
+              && $("#dsLevelOfInvasion").val() == "bone"
+              && $("#dsInvasionIntoBoneCortex").val() == "yes" ) {
+          staging = "pT4a"
+        }
+
+        if ( $("#dsLevelOfInvasion").val() == "beyond-subcutis"
+              && $("#dsLevelOfInvasion").val() == "bone"
+              && $("#dsInvasionIntoAxialBone").val() == "yes" ) {
+          staging = "pT4b"
+        }
+
+        staging=staging + " pNx pMx";
+
+        //Now Create Report Text
+        $("#reportText").empty();
+        $("#reportText").append("<div class=\"col-md-12\" style=\"font-weight:bold; text-decoration: underline; text-transform:uppercase;\">Proforma for Primary Cutaneous Squamous Cell Carcinoma</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Tumour type: "+ $("#dsTumourType").find(":selected").data("report-value") +"</div>");
+
+        var tumourSubtype = !$("#dsTumourSubtype").val().endsWith("other") ? $("#dsTumourSubtype").find(":selected").data("report-value") : $("#dsTumourSubtypeText").val();
+        $("#reportText").append("<div class=\"col-sm-12\">- Tumour subtype: "+ tumourSubtype +"</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Differentiation: "+ $("#dsTumourDifferentiation").find(":selected").data("report-value") +"</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Maximum dimension: " + maxDimension +" mm (" + $("#dsMeasurementType").find(":selected").data("report-value") + ")</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Depth of Invasion: " + depthOfInvasion + " mm</div>");
+
+        var levelOfInvasion = $("#dsLevelOfInvasion").val() == 'beyond-subcutis' ? " (into "+$("#dsInvasionBeyondSubcutis").find(":selected").data("report-value").toLowerCase() + ")" : "";
+        $("#reportText").append("<div class=\"col-sm-12\">- Level of Invasion: " + $("#dsLevelOfInvasion").find(":selected").data("report-value") + levelOfInvasion );
+        $("#reportText").append("<div class=\"col-sm-12\">- Lymphovascular space invasion: "+ $("#dsLvi").find(":selected").data("report-value") +"</div>");
+
+        var pniDetailsText  = $("#dsPni").val() == "yes" && $("#dsPniDetails").val() != "not-pt3" ? " ("+$("#dsPniDetails").find(":selected").data("report-value")+")" : ""
+        $("#reportText").append("<div class=\"col-sm-12\">- Perineural invasion: "+$("#dsPni").find(":selected").data("report-value") + pniDetailsText + "</div>");
+
+        $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Margins</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Peripheral margin: "+ ($("#dsInvasivePrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInvasivePrmDistance").val()))? $("#dsInvasivePrm").find(":selected").text():"") + ($("#dsInvasivePrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInvasivePrmDistance").val())) ? " " + $("#dsInvasivePrmDistance").val() + " mm from the margin" : "")+"</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Deep margin: "+($("#dsInvasiveDrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInvasiveDrmDistance").val()))? $("#dsInvasiveDrm").find(":selected").text():"") + ($("#dsInvasiveDrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInvasiveDrmDistance").val())) ? " " + $("#dsInvasiveDrmDistance").val() + " mm from the margin" : "")+"</div>");
+
+        $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        if ($.trim($("#dsBackgroudLesions").val())) {
+          $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Background Abnormalities</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">" + $("#dsBackgroudLesions").val() + "</div>")
+          $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        }
+
+        if ($.trim($("#dsComments").val())) {
+          $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Comments</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">" + $("#dsComments").val() + "</div>")
+          $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        }
+        $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Summary</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">" + $("#dsTumourDifferentiation").find(":selected").data("report-value") + " " + $("#dsTumourType").find(":selected").data("report-value") + " (UICC TNM8 "+staging+")</div>");
+        if ($("#dsLvi").val() == "yes") {
+          $("#reportText").append("<div class=\"col-sm-12\">Lymphovascular space invasion "+ $("#dsLvi").find(":selected").data("report-value").toLowerCase() +"</div>");
+        }
+        if ($("#dsPni").val() == "yes") {
+          $("#reportText").append("<div class=\"col-sm-12\">Perineural invasion "+ $("#dsPni").find(":selected").data("report-value").toLowerCase() + pniDetailsText + "</div>");
+        }
+        if ($("#dsLevelOfInvasion" == "beyond-subcutis")) {
+          $("#reportText").append("<div class=\"col-sm-12\">Invasion beyond subcutis (" + $("#dsInvasionBeyondSubcutis").find(":selected").data("report-value") + ")</div>");
+        }
+        if ($("#dsInvasivePrm").val() == "involved") {
+          $("#reportText").append("<div class=\"col-sm-12\">Peripheral margin involved</div>");
+        }
+        if ($("#dsInvasiveDrm").val() == "involved") {
+          $("#reportText").append("<div class=\"col-sm-12\">Deep margin involved</div>");
+        }
+        $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        $("#reportText").append("<div class=\"col-sm-12\" style=\"font-style:italic; font-size:smaller;\">Malignant Melanoma Proforma v1.0beta (insert date approved)</div>");
+      }
+
+      $("[id^=ds]").change(function() {
+        updateReport();
+      });
+      $("input:text").keyup(function() {
+        updateReport();
+      });
+
+    </script>
+  </body>
+</html>
