@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Malignant Melanoma</title>
+    <title>Primary Cutaeous Squamous Cell Carcinoma</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/proforma.css">
   </head>
@@ -400,7 +400,7 @@
         $("#reportText").append("<div class=\"col-sm-12\">- Depth of Invasion: " + depthOfInvasion + " mm</div>");
 
         var levelOfInvasion = $("#dsLevelOfInvasion").val() == 'beyond-subcutis' ? " (into "+$("#dsInvasionBeyondSubcutis").find(":selected").data("report-value").toLowerCase() + ")" : "";
-        $("#reportText").append("<div class=\"col-sm-12\">- Level of Invasion: " + $("#dsLevelOfInvasion").find(":selected").data("report-value") + levelOfInvasion );
+        $("#reportText").append("<div class=\"col-sm-12\">- Level of Invasion: " + $("#dsLevelOfInvasion").find(":selected").text() + levelOfInvasion );
         $("#reportText").append("<div class=\"col-sm-12\">- Lymphovascular space invasion: "+ $("#dsLvi").find(":selected").data("report-value") +"</div>");
 
         var pniDetailsText  = $("#dsPni").val() == "yes" && $("#dsPniDetails").val() != "not-pt3" ? " ("+$("#dsPniDetails").find(":selected").data("report-value")+")" : ""
@@ -431,7 +431,7 @@
         if ($("#dsPni").val() == "yes") {
           $("#reportText").append("<div class=\"col-sm-12\">Perineural invasion "+ $("#dsPni").find(":selected").data("report-value").toLowerCase() + pniDetailsText + "</div>");
         }
-        if ($("#dsLevelOfInvasion" == "beyond-subcutis")) {
+        if ($("#dsLevelOfInvasion").val() == "beyond-subcutis") {
           $("#reportText").append("<div class=\"col-sm-12\">Invasion beyond subcutis (" + $("#dsInvasionBeyondSubcutis").find(":selected").data("report-value") + ")</div>");
         }
         if ($("#dsInvasivePrm").val() == "involved") {
