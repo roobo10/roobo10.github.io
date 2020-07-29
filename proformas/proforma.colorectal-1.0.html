@@ -228,8 +228,8 @@
           <label for="dsGeneticsRequested" class="col-sm-4 col-form-label">Genetics Requested at time of diagnosis</label>
           <div class="col-sm-8">
             <select class="form-control" id="dsGeneticsRequested">
-              <option>No</option>
-              <option>Yes</option>
+              <option data-report-value="No">No</option>
+              <option data-report-value="Yes (Please check NHS GGC Clinical Portal for result)">Yes</option>
             </select>
           </div>
         </div>
@@ -494,7 +494,7 @@
           $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
         }
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Molecular Testing</div>");
-        $("#reportText").append("<div class=\"col-sm-12\">- Molecular test requested at diagnosis: "+$("#dsGeneticsRequested").find(":selected").text() +"</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Molecular test requested at diagnosis: "+$("#dsGeneticsRequested").find(":selected").data("report-value") +"</div>");
         $("#reportText").append("<div class=\"col-sm-12\">- Best blocks for testing: "+$("#dsGeneticsBestTumour1").val() +" (Tumour content: " + parseInt($("#dsGeneticsTumourPercentage1").val()) +"%), " + $("#dsGeneticsBestTumour2").val() +" (Tumour content: " + parseInt($("#dsGeneticsTumourPercentage2").val()) +"%)</div>");
         $("#reportText").append("<div class=\"col-sm-12\">- Best block for normal control: "+$("#dsGeneticsNormal").val() +"</div>");
         $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
