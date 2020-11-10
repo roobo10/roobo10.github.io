@@ -477,7 +477,12 @@
         if ($("#dsTumourType").val().startsWith("in-situ")) {
           staging = "pTis";
         }
-        staging=staging + " pNx pMx";
+
+        nStage = "pNx pMx"
+        if ($("#dsMicrosatellites").val() == "yes") {
+          nStage= "at least pN1c pMx"
+        }
+        staging=staging + " " + nStage;
 
         //Now Create Report Text
         $("#reportText").empty();
@@ -534,6 +539,9 @@
         }
         $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Summary</div>");
         $("#reportText").append("<div class=\"col-sm-12\">" +  tumourType + " (UICC TNM8 "+staging+")</div>");
+        if (staging.includes("pN1c")){
+          $("#reportText").append("<div class=\"col-sm-12\">Microsatellite/In-transit Metastases present, therefore pN1c if no lymph node metastases are present. Please check the final pN stage depending on other factors.</div>");
+        }
         if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
           $("#reportText").append("<div class=\"col-sm-12\">Breslow Thickness: "+$("#dsBreslowThickness").val() +"mm</div>");
           $("#reportText").append("<div class=\"col-sm-12\">Lymphovascular space invasion "+ $("#dsLvi").find(":selected").data("report-value").toLowerCase() +"</div>");
