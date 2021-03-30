@@ -1,0 +1,613 @@
+<html>
+  <head>
+    <title>Malignant Melanoma</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+    #reportText {
+      font-family: "Times New Roman"; font-size: 11pt;
+    }
+    .report-title {
+      font-size: 11pt;
+      font-weight: bold;
+      text-decoration: underline;
+      text-transform: uppercase;
+    }
+    .report-heading {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    </style>
+  </head>
+  <body onload="updateReport()">
+    <div class="container my-3">
+      <h1>Melanoma Proforma</h1>
+      <p class='lead'>version 1.0</p>
+      <p>If you notice something that doesn't work as you think it should, please log it either <a href="https://scottish.sharepoint.com/sites/PathologyTeam2-Consultants/_layouts/15/listform.aspx?PageType=8&ListId=%7B1F350A38-B19D-4DED-A3E0-433ABBDB5A0B%7D&RootFolder=%2Fsites%2FPathologyTeam2-Consultants%2FLists%2FBug%20Tracker&Source=https%3A%2F%2Fscottish.sharepoint.com%2Fsites%2FPathologyTeam2-Consultants%2FLists%2FBug%2520Tracker%2FAllItems.aspx&ContentTypeId=0x01030016557293936E7D449F135AE61B810678">Microsoft Teams</a> or on <a href="https://github.com/roobo10/roobo10.github.io/issues/new">Github</a>.
+      <form>
+        <div class="form-group row">
+          <label for="dsTumourType" class="col-sm-4 col-form-label">Tumour Type</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 px-0">
+              <select class="form-control" id="dsTumourType">
+                <option value="invasive-lentigo-maligna-melanoma" data-report-value="Lentigo Maligna Melanoma">Lentigo maligna melanoma</option>
+                <option value="invasive-superficial-spreading" data-report-value="Superficial Spreading Malignant Melanoma">Superficial spreading</option>
+                <option value="invasive-nodular" data-report-value="Nodular Melanoma">Nodular</option>
+                <option value="invasive-acral-lentiginous" data-report-value="Acral Lentiginous Malignant Melanoma">Acral lentiginous</option>
+                <option value="invasive-desmoplastic" data-report-value="Desmoplastic Melanoma">Desmoplastic</option>
+                <option value="invasive-other">Other (invasive)</option>
+                <option value="in-situ-lentigo-maligna" data-report-value="Lentigo Maligna">Lentigo maligna (in-situ)</option>
+                <option value="in-situ-superficial-spreading" data-report-value="Melanoma In-Situ">Superficial spreading (in-situ)</option>
+                <option value="in-situ-acral-lentiginous" data-report-value="Acral Lentiginous Melanoma In-Situ">Acral lentiginous (in-situ)</option>
+                <option value="in-situ-other">Other (in-situ)</option>
+              </select>
+            </div>
+            <div class="col-sm-12 px-0">
+              <input type="text" class="form-control my-2 d-none" id="dsTumourTypeText" data-required="true">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row" id="section-breslow">
+          <label for="dsBreslowThickness" class="col-sm-4 col-form-label">Breslow Thickness</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 row">
+              <input type="text" class="form-control col-sm-2" id="dsBreslowThickness" data-required="true"><div class="col-sm-3">mm</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row" id="section-clark">
+          <label for="dsClarkLevel" class="col-sm-4 col-form-label">Clark Level</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 px-0">
+              <select class="form-control" id="dsClarkLevel">
+                <option value="1" data-report-value="Level I">Confined to the epidermis (melanoma in situ) (Level I)</option>
+                <option value="2" data-report-value="Level II">Invasion into the papillary dermis (Level II)</option>
+                <option value="3" data-report-value="Level III">Invasion to the junction of the papillary and reticular dermis (Level III)</option>
+                <option value="4" data-report-value="Level IV">Invasion into the reticular dermis (Level IV)</option>
+                <option value="5" data-report-value="Level V">Invasion into subcutaneous tissue (Level V)</option>
+                <option value="na" data-report-value="Not Assessable">Not Assessable</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row" id="section-mitoses">
+          <label for="dsMitoses" class="col-sm-4 col-form-label">Mitotic Rate</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 row">
+              <input type="text" class="form-control col-sm-2" id="dsMitoses" data-required="true"><div class="col-sm-3"> per mm<sup>2</sup></div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="dsRegression" class="col-sm-4 col-form-label">Regression</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="dsRegression">
+              <option value="no" data-report-value="Not Identified" selected>Not identified</option>
+              <option value="yes" data-report-value="Present">Present</option>
+              <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
+              <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" id="section-ulceration">
+          <label for="dsUlceration" class="col-sm-4 col-form-label">Ulceration</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="dsUlceration">
+              <option value="no" data-report-value="Not Identified" selected>Not identified</option>
+              <option value="yes" data-report-value="Present">Present</option>
+              <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
+              <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" id="section-lvi">
+          <label for="dsLvi" class="col-sm-4 col-form-label">Lymphocasvular Invasion</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="dsLvi">
+              <option value="no" data-report-value="Not Identified" selected>Not identified</option>
+              <option value="yes" data-report-value="Present">Present</option>
+              <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
+              <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" id="section-microsatellite">
+          <label for="dsMicrosatellites" class="col-sm-4 col-form-label">Microsatellite/in-transit metastasis</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="dsMicrosatellites">
+              <option value="no" data-report-value="Not Identified" selected>Not identified</option>
+              <option value="yes" data-report-value="Present">Present</option>
+              <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
+              <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" id="section-pni">
+          <label for="dsPni" class="col-sm-4 col-form-label">Neurotropic/perineural invasion</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="dsPni">
+              <option value="no" data-report-value="Not Identified" selected>Not identified</option>
+              <option value="yes" data-report-value="Present">Present</option>
+              <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
+              <option value="na" data-report-value="Not Assessable">Cannot be assessed</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" id="section-til">
+          <label for="dsTil" class="col-sm-4 col-form-label">Tumour-infiltrating lymphocytes</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="dsTil">
+              <option value="absent" data-report-value="Absent">Absent</option>
+              <option value="nonbrisk" data-report-value="Non-Brisk" selected>Non-Brisk</option>
+              <option value="brisk" data-report-value="Brisk">Brisk</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" id="section-growth-phase">
+          <label for="dsGrowthPhase" class="col-sm-4 col-form-label">Growth Phase</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="dsGrowthPhase">
+              <option value="radial" data-report-value="Radial">Radial (micro-invasive melanoma) </option>
+              <option value="vertical" data-report-value="Vertical" selected>Vertical</option>
+              <option value="uncertain" data-report-value="Uncertain">Uncertain</option>
+            </select>
+          </div>
+        </div>
+        <h2>Margins</h2>
+        <div id="margin-in-situ-section">
+          <h3>In-Situ Component</h3>
+          <div class="form-group row">
+            <label for="dsInsituPrm" class="col-sm-4 col-form-label">Peripheral Margin</label>
+            <div class="col-sm-8 row">
+              <select class="form-control col-sm-3" id="dsInsituPrm">
+                <option value="clear">Not Involved</option>
+                <option value="involved">Involved</option>
+                <option value="uncertain">Uncertain</option>
+                <option value="na">Not Applicable</option>
+              </select>
+              <div id="dsInsituPrmDistanceBox" class="col-sm-9 row">
+                <div class="mx-1 col-sm-1 text-center">-</div>
+                <input class="form-control col-sm-3" type="text" id="dsInsituPrmDistance" data-required="true"/>
+                <div class="col-sm-6">
+                  &nbsp;mm from margin.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="dsInsituDrm" class="col-sm-4 col-form-label">Deep Margin</label>
+            <div class="col-sm-8 row">
+              <select class="form-control col-sm-3" id="dsInsituDrm">
+                <option value="clear">Not Involved</option>
+                <option value="involved">Involved</option>
+                <option value="uncertain">Uncertain</option>
+                <option value="na">Not Applicable</option>
+              </select>
+              <div id="dsInsituDrmDistanceBox" class="col-sm-9 row">
+                <div class="mx-1 col-sm-1 text-center">-</div>
+                <input class="form-control col-sm-3" type="text" id="dsInsituDrmDistance" data-required="true"/>
+                <div class="col-sm-6">
+                  &nbsp;mm from margin.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="margin-invasive-section">
+          <h3>Invasive Component</h3>
+          <div class="form-group row">
+            <label for="dsInvasivePrm" class="col-sm-4 col-form-label">Peripheral Margin</label>
+            <div class="col-sm-8 row">
+              <select class="form-control col-sm-3" id="dsInvasivePrm">
+                <option value="clear">Not Involved</option>
+                <option value="involved">Involved</option>
+                <option value="uncertain">Uncertain</option>
+                <option value="na">Not Applicable</option>
+              </select>
+              <div id="dsInvasivePrmDistanceBox"  class="col-sm-9 row">
+                <div class="mx-1 col-sm-1 text-center">-</div>
+                <input class="form-control col-sm-3" type="text" id="dsInvasivePrmDistance" data-required="true"/>
+                <div class="col-sm-6">
+                  &nbsp;mm from margin.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="dsInvasiveDrm" class="col-sm-4 col-form-label">Deep Margin</label>
+            <div class="col-sm-8 row">
+              <select class="form-control col-sm-3" id="dsInvasiveDrm">
+                <option value="clear">Not Involved</option>
+                <option value="involved">Involved</option>
+                <option value="uncertain">Uncertain</option>
+                <option value="na">Not Applicable</option>
+              </select>
+              <div id="dsInvasiveDrmDistanceBox" class="col-sm-9 row">
+                <div class="mx-1 col-sm-1 text-center">-</div>
+                <input class="form-control col-sm-3" type="text" id="dsInvasiveDrmDistance" data-required="true"/>
+                <div class="col-sm-6">
+                  &nbsp;mm from margin.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="section-genetics" class="d-none">
+          <h2>Genetics</h2>
+          <div class="form-group row" id="dsBRAFRequest">
+            <label for="dsGeneticsBRAFRequested" class="col-sm-4 col-form-label">BRAF status requested at time of diagnosis</label>
+            <div class="col-sm-8">
+              <select class="form-control" id="dsGeneticsBRAFRequested">
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row" id="dsCKITRequest">
+            <label for="dsGeneticsCKITRequested" class="col-sm-4 col-form-label">cKIT status requested at time of diagnosis</label>
+            <div class="col-sm-8">
+              <select class="form-control" id="dsGeneticsCKITRequested">
+                <option>No</option>
+                <option>Yes</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="dsGeneticsTumour" class="col-sm-4 col-form-label">Best Tumour Block</label>
+            <div class="col-sm-8">
+              <div class="col-sm-12 row">
+                <input type="text" class="form-control col-sm-2" id="dsGeneticsBestTumour">
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="dsGeneticsTumourPercentage" class="col-sm-4 col-form-label">Percentage Tumour</label>
+            <div class="col-sm-8">
+              <div class="col-sm-12 row">
+                <input type="text" class="form-control col-sm-2" id="dsGeneticsTumourPercentage"><div class="col-sm-1">%</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="dsGeneticsNormal" class="col-sm-4 col-form-label">Best Normal Control</label>
+            <div class="col-sm-8">
+              <div class="col-sm-12 row">
+                <input type="text" class="form-control col-sm-2" id="dsGeneticsNormal">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12"><div class="alert alert-info" role="alert" id="nbRequestBRAF">Request BRAF status should be requested on all pT4, pN1+ and pM1 melanomas.</div></div>
+        <h2>Background Lesions</h2>
+        <div class="form-group row">
+          <label for="dsBackgroudLesions" class="col-sm-4 col-form-label">Description of background abnormalities</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 row">
+              <textarea id="dsBackgroudLesions" class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <h2>Comments</h2>
+        <div class="form-group row">
+          <label for="dsComments" class="col-sm-4 col-form-label">Other comments</label>
+          <div class="col-sm-8">
+            <div class="col-sm-12 row">
+              <textarea id="dsComments" class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row d-none" id="reportText">
+      </div>
+      <div class="row my-2">
+        <div class="col-sm-12">
+          <button type="button" class="btn btn-primary btn-lg float-right" onclick="copyToClipboard();">Copy to Clipboard</button>
+        </div>
+      </div>
+    </div>
+    <script src="../lib/js/utils.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+      var urlParams = getParameters();
+      if("type" in urlParams)
+      {
+        $("#dsTumourType").val(urlParams['type']);
+        if (urlParams['type'].startsWith("in-situ")){
+          $("#dsClarkLevel").val("1");
+        }
+        else
+        {
+          $("#dsClarkLevel").val("2");
+        }
+      }
+      else
+      {
+        $("#dsClarkLevel").val("2");
+      }
+      var tempClark = $("#dsClarkLevel").find(":selected").val()
+      var debug = false;
+
+      if("debug" in urlParams)
+      {
+        debug = urlParams["debug"] == "true" ? true : false;
+      }
+
+      if (debug) {
+        $("#reportText").removeClass("d-none");
+      }
+      else {
+        $("#reportText").addClass("d-none");
+      }
+      function isNonZeroInt(str) {
+        n = parseInt(str)
+        return (n == 0 || isNaN(n))
+      }
+      function copyToClipboard() {
+        var str = document.getElementById('reportText').innerHTML;
+
+        function listener(e) {
+          e.clipboardData.setData("text/html", str);
+          e.clipboardData.setData("text/plain", str);
+          e.preventDefault();
+        }
+        document.addEventListener("copy", listener);
+        document.execCommand("copy");
+        document.removeEventListener("copy", listener);
+      };
+
+      function updateReport() {
+
+        //Dynamic Fields
+        if ($('#dsTumourType').val().endsWith("other")) {
+          $('#dsTumourTypeText').removeClass("d-none")
+        }
+        else {
+          $('#dsTumourTypeText').addClass("d-none")
+        }
+
+        if ($("#dsTumourType").val().startsWith("in-situ-")) {
+          $("#section-breslow").addClass("d-none")
+          $("#section-mitoses").addClass("d-none")
+          $("#section-lvi").addClass("d-none")
+          $("#section-pni").addClass("d-none")
+          $("#section-til").addClass("d-none")
+          $("#section-microsatellite").addClass("d-none")
+          $("#section-growth-phase").addClass("d-none")
+          $("#section-ulceration").addClass("d-none")
+          $("#margin-invasive-section").addClass("d-none")
+          $("#dsInsituDrm").parent().parent().removeClass("d-none");
+          $("#dsClarkLevel > option[value='1']").removeAttr('disabled');
+          $("#dsClarkLevel").val(1)
+          $("#dsClarkLevel").prop("disabled",true)
+        }
+
+        if ($("#dsTumourType").val().startsWith("invasive-")) {
+          $("#section-breslow").removeClass("d-none");
+          $("#section-mitoses").removeClass("d-none");
+          $("#section-lvi").removeClass("d-none");
+          $("#section-pni").removeClass("d-none");
+          $("#section-til").removeClass("d-none");
+          $("#section-microsatellite").removeClass("d-none");
+          $("#section-growth-phase").removeClass("d-none");
+          $("#section-ulceration").removeClass("d-none");
+          $("#margin-invasive-section").removeClass("d-none");
+          $("#dsInsituDrm").parent().parent().addClass("d-none");
+          $("#dsClarkLevel > option[value='1']").prop("disabled",true);
+          $("#dsClarkLevel").removeAttr('disabled');
+          if ($("#dsClarkLevel").find(":selected").val() != "1") {
+            tempClark = $("#dsClarkLevel").find(":selected").val();
+          }
+          $("#dsClarkLevel").val(tempClark);
+        }
+
+        if($("#dsInsituPrm").val() != "clear")
+        {
+          $("#dsInsituPrmDistanceBox").addClass("d-none");
+        }
+        else
+        {
+          $("#dsInsituPrmDistanceBox").removeClass("d-none");
+        }
+
+        if($("#dsInvasivePrm").val() != "clear")
+        {
+          $("#dsInvasivePrmDistanceBox").addClass("d-none");
+        }
+        else
+        {
+          $("#dsInvasivePrmDistanceBox").removeClass("d-none");
+        }
+
+        if($("#dsInvasiveDrm").val() != "clear")
+        {
+          $("#dsInvasiveDrmDistanceBox").addClass("d-none");
+        }
+        else
+        {
+          $("#dsInvasiveDrmDistanceBox").removeClass("d-none");
+        }
+
+
+        //Consistency Checking
+        $("input[data-required]").each(function(){
+          if ($.trim($(this).val()) == ""){
+            $(this).addClass("bg-danger");
+            $(this).addClass("text-white");
+          }
+          else {
+            $(this).removeClass("bg-danger");
+            $(this).removeClass("text-white");
+
+          }
+        })
+
+        //Staging
+        var breslowThickness = parseFloat($("#dsBreslowThickness").val());
+        var staging = "pTis";
+        var needsBRAF = false;
+
+        if(breslowThickness < 0.8){
+          if ($("#dsUlceration").val() != "yes") {
+            staging = "pT1a";
+          }
+          else
+          {
+            staging = "pT1b";
+          }
+        }
+        else if (breslowThickness <= 1) {
+          staging = "pT1b";
+        }
+        else if (breslowThickness <= 2) {
+          if ($("#dsUlceration").val() != "yes") {
+            staging = "pT2a";
+          }
+          else
+          {
+            staging = "pT2b";
+          }
+        }
+        else if (breslowThickness <= 4) {
+          if ($("#dsUlceration").val() != "yes") {
+            staging = "pT3a";
+          }
+          else
+          {
+            staging = "pT3b";
+          }
+        }
+        else if (breslowThickness > 4) {
+          if ($("#dsUlceration").val() != "yes") {
+            staging = "pT4a";
+          }
+          else
+          {
+            staging = "pT4b";
+            needsBRAF = true;
+          }
+        }
+        if ($("#dsTumourType").val().startsWith("in-situ")) {
+          staging = "pTis";
+        }
+
+        nStage = "pNx pMx"
+        if ($("#dsMicrosatellites").val() == "yes") {
+          nStage= "at least pN1c pMx"
+          needsBRAF = true;
+        }
+        staging=staging + " " + nStage;
+
+        if (needsBRAF || $("#dsTumourType").val() == "invasive-acral-lentiginous") {
+          $("#nbRequestBRAF").removeClass("d-none");
+          $("#section-genetics").removeClass("d-none");
+        }
+        else {
+          $("#nbRequestBRAF").addClass("d-none");
+          $("#section-genetics").addClass("d-none");
+        }
+        if (needsBRAF) {
+          $("#dsBRAFRequest").removeClass("d-none");
+        }
+        else {
+          $("#dsBRAFRequest").addClass("d-none");
+        }
+        if ($("#dsTumourType").val() == "invasive-acral-lentiginous") {
+          $("#dsCKITRequest").removeClass("d-none");
+        }
+        else {
+          $("#dsCKITRequest").addClass("d-none");
+        }
+        //Now Create Report Text
+        $("#reportText").empty();
+        $("#reportText").append("<div class=\"col-md-12\" style=\"font-weight:bold; text-decoration: underline; text-transform:uppercase;\">Melanoma Proforma</div>");
+        var tumourType = !$("#dsTumourType").find(":selected").val().endsWith("other") ? $("#dsTumourType").find(":selected").data("report-value") :$("#dsTumourTypeText").val();
+        $("#reportText").append("<div class=\"col-sm-12\">- Tumour type: "+ tumourType +"</div>");
+        if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
+          $("#reportText").append("<div class=\"col-sm-12\">- Breslow Thickness: "+$("#dsBreslowThickness").val() +" mm</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Mitotic Rate: "+$("#dsMitoses").val() +" per mm<sup>2</sup></div>");
+        }
+        if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
+          $("#reportText").append("<div class=\"col-sm-12\">- Ulceration: "+$("#dsUlceration").find(":selected").data("report-value") +"</div>");
+        }
+        $("#reportText").append("<div class=\"col-sm-12\">- Regression: "+$("#dsRegression").find(":selected").data("report-value") +"</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Clark Level: "+$("#dsClarkLevel").find(":selected").data("report-value") +"</div>");
+        if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
+          $("#reportText").append("<div class=\"col-sm-12\">- Lymphovascular space invasion: "+ $("#dsLvi").find(":selected").data("report-value") +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Perineural invasion: "+$("#dsPni").find(":selected").data("report-value") +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Microsatellite/In-transit Metastases: "+$("#dsMicrosatellites").find(":selected").data("report-value") +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Tumour-infiltrating lymphocytes: "+$("#dsTil").find(":selected").data("report-value") +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Growth phase: "+$("#dsGrowthPhase").find(":selected").data("report-value") +"</div>");
+        }
+        $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Margins</div>");
+        $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: none;\">In-situ Component</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">- Peripheral margin: "+ ($("#dsInsituPrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInsituPrmDistance").val()))? $("#dsInsituPrm").find(":selected").text() :"") + ($("#dsInsituPrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInsituPrmDistance").val())) ? " " + $("#dsInsituPrmDistance").val() + " mm from the margin" : "")+"</div>");
+        if ($("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
+          $("#reportText").append("<div class=\"col-sm-12\">- Deep margin: "+ ($("#dsInsituDrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInsituDrmDistance").val()))? $("#dsInsituDrm").find(":selected").text() :"") + ($("#dsInsituDrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInsituDrmDistance").val())) ? " " + $("#dsInsituDrmDistance").val() + " mm from the margin" : "")+"</div>");
+        }
+        if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
+          $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: none;\">Invasive Component</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Peripheral margin: "+ ($("#dsInvasivePrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInvasivePrmDistance").val()))? $("#dsInvasivePrm").find(":selected").text():"") + ($("#dsInvasivePrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInvasivePrmDistance").val())) ? " " + $("#dsInvasivePrmDistance").val() + " mm from the margin" : "")+"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Deep margin: "+($("#dsInvasiveDrm").find(":selected").val() != "clear" || isNaN(parseInt($("#dsInvasiveDrmDistance").val()))? $("#dsInvasiveDrm").find(":selected").text():"") + ($("#dsInvasiveDrm").find(":selected").val() == "clear" && !isNaN(parseInt($("#dsInvasiveDrmDistance").val())) ? " " + $("#dsInvasiveDrmDistance").val() + " mm from the margin" : "")+"</div>");
+        }
+
+        $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        if ($.trim($("#dsBackgroudLesions").val())) {
+          $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Background Abnormalities</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">" + $("#dsBackgroudLesions").val() + "</div>")
+          $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        }
+        if(!$("#section-genetics").hasClass("d-none")) {
+          $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Molecular Testing</div>");
+          if (needsBRAF) {
+            $("#reportText").append("<div class=\"col-sm-12\">- BRAF requested at diagnosis: "+$("#dsGeneticsBRAFRequested").find(":selected").text() +"</div>");
+          }
+          if ($("#dsTumourType").val() == "invasive-acral-lentiginous") {
+            $("#reportText").append("<div class=\"col-sm-12\">- cKIT requested at diagnosis: "+$("#dsGeneticsCKITRequested").find(":selected").text() +"</div>");
+          }
+          $("#reportText").append("<div class=\"col-sm-12\">- Best block for molecular testing: "+$("#dsGeneticsBestTumour").val() +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">- Percentage of tumour in above block: "+ parseInt($("#dsGeneticsTumourPercentage").val()) +"%</div>");
+          // $("#reportText").append("<div class=\"col-sm-12\">- Best block for normal control: "+$("#dsGeneticsNormal").val() +"</div>");
+          $("#reportText").append(" <div class=\"col-sm-12\">&nbsp;</div>");
+        }
+        if ($.trim($("#dsComments").val())) {
+          $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Comments</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">" + $("#dsComments").val() + "</div>")
+          $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        }
+        $("#reportText").append("<div class=\"col-sm-12\" style=\"font-weight:bold; text-decoration: underline;\">Summary</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">" +  tumourType + " (UICC TNM8 "+staging+")</div>");
+        if (staging.includes("pN1c")){
+          $("#reportText").append("<div class=\"col-sm-12\">Microsatellite/In-transit Metastases present, therefore pN1c if no lymph node metastases are present. Please check the final pN stage depending on other factors.</div>");
+        }
+        if (!$("#dsTumourType").find(":selected").val().startsWith("in-situ")) {
+          $("#reportText").append("<div class=\"col-sm-12\">Breslow Thickness: "+$("#dsBreslowThickness").val() +"mm</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">Lymphovascular space invasion "+ $("#dsLvi").find(":selected").data("report-value").toLowerCase() +"</div>");
+          $("#reportText").append("<div class=\"col-sm-12\">Perineural invasion "+ $("#dsPni").find(":selected").data("report-value").toLowerCase() +"</div>");
+          if ($("#dsInvasivePrm").val() == "involved") {
+            $("#reportText").append("<div class=\"col-sm-12\">Peripheral margin involved</div>");
+          }
+          if ($("#dsInvasiveDrm").val() == "involved") {
+            $("#reportText").append("<div class=\"col-sm-12\">Deep margin involved</div>");
+          }
+          if ($("#dsInsituPrm").val() == "involved") {
+            $("#reportText").append("<div class=\"col-sm-12\">Peripheral margin involved by in-situ component</div>");
+          }
+        }
+        $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        $("#reportText").append("<div class=\"col-sm-12\">&nbsp;</div>");
+        $("#reportText").append("<div class=\"col-sm-12\" style=\"font-style:italic; font-size:smaller;\">Malignant Melanoma Proforma v1.0beta (insert date approved)</div>");
+      }
+
+      $("[id^=ds]").change(function() {
+        updateReport();
+      });
+      $("input:text").keyup(function() {
+        updateReport();
+      });
+
+    </script>
+  </body>
+</html>
